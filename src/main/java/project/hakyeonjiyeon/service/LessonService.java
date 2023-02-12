@@ -57,10 +57,19 @@ public class LessonService {
         return updateLessonId;
     }
 
-    //레슨 삭제
 
     //레슨 조회
     public Lesson findLesson(Long lessonId) {
         return lessonRepository.findById(lessonId);
+    }
+
+    //레슨 전체 조회
+    public List<Lesson> findAllLesson() {
+        return lessonRepository.findAllLesson();
+    }
+
+    //레슨 삭제
+    public void deleteLesson(Long lessonId) {
+        lessonRepository.deleteLesson(lessonId);
     }
 }

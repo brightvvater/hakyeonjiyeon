@@ -26,5 +26,12 @@ public class LessonRepository {
         return em.createQuery("select l from Lesson l").getResultList();
     }
 
+    public void deleteLesson(Long lessonId) {
+        em.createQuery(
+                "delete from Lesson l where l.id = :lessonId"
+        ).setParameter("lessonId", lessonId)
+                .executeUpdate();
+    }
+
 
 }

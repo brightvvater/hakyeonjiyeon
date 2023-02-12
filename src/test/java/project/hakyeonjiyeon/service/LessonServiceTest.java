@@ -21,6 +21,7 @@ import project.hakyeonjiyeon.repository.TeacherRepository;
 import javax.persistence.EntityManager;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -102,6 +103,32 @@ class LessonServiceTest {
 
 
     }
+
+    @Test
+    @DisplayName("레슨 전체 조회 및 삭제 테스트")
+    @Rollback(value = false)
+    public void LessonList() {
+        //given
+        LessonDto lessonDto = createLessonDto();
+
+        Long teacherId = createTeacher();
+        Long categoryId = createCategory();
+
+        //when
+        Long lessonId = lessonService.createLesson(teacherId, categoryId, lessonDto);
+        Long lessonId2 = lessonService.createLesson(teacherId, categoryId, lessonDto);
+
+        List<Lesson> allLesson = lessonService.findAllLesson();
+        assertThat(allLesson.size()).isEqualTo(2);
+
+        em.clear();
+
+        lessonService.deleteLesson(lessonId);
+        assertThat(lessonService.findAllLesson().size()).isEqualTo(1);
+
+    }
+
+
 
 
     private static LessonDto createLessonDto() {
