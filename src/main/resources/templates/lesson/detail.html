@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>LessonDetail</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<section>
+    <a href=""><img src="/images/136524.png" alt="" width="300" height="150"></a><br>
+    <h2 th:text="${lesson.title}">제목</h2>
+    <h3 th:text="${lesson.teacherName}">강사</h3>
+    <div class="form-group">
+        <span>일시</span>
+        <span th:text="${#temporals.format(lesson.startDate, 'yyyy-MM-dd')}+'~'+${#temporals.format(lesson.endDate, 'yyyy-MM-dd')}">일시</span>
+    </div>
+    <div class="form-group">
+        <span>시간</span>
+        <span th:text="${#temporals.format(lesson.startDate, 'HH:mm:ss')}+'~'+${#temporals.format(lesson.endDate, 'HH:mm:ss')}">시간</span>
+    </div>
+    <div class="form-group">
+        <span>가격</span>
+        <span th:text="${lesson.price} +'원'">가격</span>
+    </div>
+    <p>___________________________________________________________________________________________________________________________________________</p>
+
+    <h2>강사 소개</h2>
+    <div>
+        <a href=""><img src="/images/136524.png" alt="" width="300" height="150"></a><br>
+        <span th:text="${lesson.introduction}">소개</span>
+    </div>
+
+    <h2>내용</h2>
+    <div>
+        <a href=""><img src="/images/136524.png" alt="" width="300" height="150"></a><br>
+        <span th:text="${lesson.content}">내용</span>
+    </div>
+    <form>
+        <input hidden="hidden" th:text="${lesson.lessonId}">
+        <input type="submit">구매하기</input>
+    </form>
+
+</section>
+</body>
+<script>
+
+</script>
+</html>
+

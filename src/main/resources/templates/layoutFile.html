@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:replace="${title}">레이아웃 타이틀</title>
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+</head>
+<body class="container">
+<header>
+    <h1>진주에서 배울 수 있는 것</h1>
+    <p>__________________________________________________________________________________________________________________________________________________________</p>
+
+</header>
+
+<div th:replace="${content}">
+    <p>레이아웃 컨텐츠</p>
+</div>
+<footer>
+    <p>__________________________________________________________________________________________________________________________________________________________</p>
+    <h3>진주에서 배울 수 있는 것</h3>
+    <ul class="left">
+        <li>(주)진주에서 배울 수 있는 것/대표: 김호진</li>
+        <li>사업자번호</li>
+        <li>대표번호:010-3732-3699</li>
+        <li>진주시 신안동</li>
+    </ul>
+    <ul class="right">
+        <li>문의하기</li>
+        <li>이용약관</li>
+        <li>개인정보처리방침</li>
+        <li>로고</li>
+    </ul>
+</footer>
+</body>
+</html>

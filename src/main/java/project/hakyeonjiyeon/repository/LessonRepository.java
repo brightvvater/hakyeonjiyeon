@@ -3,6 +3,7 @@ package project.hakyeonjiyeon.repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import project.hakyeonjiyeon.domain.Lesson;
+import project.hakyeonjiyeon.dto.LessonMainDto;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -28,9 +29,27 @@ public class LessonRepository {
 
     public void deleteLesson(Long lessonId) {
         em.createQuery(
-                "delete from Lesson l where l.id = :lessonId"
-        ).setParameter("lessonId", lessonId)
+                        "delete from Lesson l where l.id = :lessonId"
+                ).setParameter("lessonId", lessonId)
                 .executeUpdate();
+    }
+
+    public List<Lesson> findLessonWithTeacherAndCategory() {
+        return em.createQuery(
+                "select l from Lesson l" +
+                        " join fetch l.teacher" +
+                        " join fetch l.category"
+        ).getResultList();
+    }
+
+    public Lesson findLessonDetail(Long lessonId) {
+        return (Lesson) em.createQuery(
+                "select l from Lesson l" +
+                        " join fetch l.teacher" +
+                        " join fetch l.category"+
+                        " where l.id= :id"
+        ).setParameter("id",lessonId)
+                .getSingleResult();
     }
 
 

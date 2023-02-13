@@ -1,0 +1,17 @@
+
+.container {
+     text-align:center;
+}
+
+footer li {
+     list-style: none;
+}
+
+.left li {
+     display: inline;
+}
+
+.table-main td {
+    text-align: center;
+
+}

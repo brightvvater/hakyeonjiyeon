@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+
+<section>
+    <!--<table class="table-main">
+        <tr th:each="lesson : ${lessons}" >
+            <td th:text="${lesson.title}"></td>
+            <td th:text="${lesson.lessonId}">자신감 있는 말하기를 위해</td>
+        </tr>
+    </table>-->
+    <h2>연단 공포증 극복하기</h2>
+    <div class="table-main" th:each="lesson : ${lessons}">
+        <div th:if="${lesson.categoryName eq 'category1'}">
+            <span>
+                <a th:href="@{/lesson/detail/{param1}(param1=${lesson.lessonId})}"><img src="/images/136524.png" alt="" width="300" height="150"></a>
+            </span>
+            <span th:text="${lesson.title}">자신감 있는 말하기를 위해</span>
+            <span th:text="${lesson.categoryName} + '|'+ ${lesson.teacherName}"> 스피치</span>
+        </div>
+    </div>
+
+    <h2>태어난 김에 세계여행 가즈아~</h2>
+    <div class="table-main">
+        <div th:each="lesson : ${lessons}" th:if="${lesson.categoryName eq '카테고리1'}">
+            <span>
+                <a th:href="@{/lesson/detail/{param1}(param1=${lesson.lessonId})}"><img src="/images/136524.png" alt="" width="300" height="150"></a>
+            </span>
+            <span th:text="${lesson.title}">자신감 있는 말하기를 위해</span>
+            <span th:text="${lesson.categoryName} + '|'+ ${lesson.teacherName}">자기개발|최효정 스피치</span>
+        </div>
+    </div>
+
+    <h2>나도 사장님!</h2>
+    <div class="table-main">
+        <div th:each="lesson : ${lessons}" th:if="${lesson.categoryName eq 'category3'}">
+            <span>
+                <a th:href="@{/lesson/detail/{param1}(param1=${lesson.lessonId})}"><img src="/images/136524.png" alt="" width="300" height="150"></a>
+            </span>
+            <span th:text="${lesson.title}">자신감 있는 말하기를 위해</span>
+            <span th:text="${lesson.categoryName} + '|'+ ${lesson.teacherName}">자기개발|최효정 스피치</span>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>
+
