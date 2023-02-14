@@ -29,13 +29,12 @@ public class OrderRepository {
         ).getResultList();
     }
 
-    public List<Order> findByMember(Member member) {
+    public List<Order> findByMember(Long memberId) {
         return em.createQuery(
-                "select o from Order o where o.member=:member")
-                .setParameter("member", member)
+                "select o from Order o join fetch o.lesson where o.member.id=:memberId")
+                .setParameter("memberId", memberId)
                 .getResultList();
 
-        //"select o from Order o fetch join Member m where m.id= :memberId" jpql... ㅠㅠ
     }
 
 

@@ -62,8 +62,8 @@ class LessonServiceTest {
         em.flush();
         em.clear();
         //then
-        assertThat(teacherId).isEqualTo(lessonService.findLesson(lessonId).getTeacher().getId());
-        assertThat(categoryId).isEqualTo(lessonService.findLesson(lessonId).getCategory().getId());
+        assertThat(teacherId).isEqualTo(lessonRepository.findById(lessonId).getTeacher().getId());
+        assertThat(categoryId).isEqualTo(lessonRepository.findById(lessonId).getCategory().getId());
 
     }
 
@@ -98,8 +98,8 @@ class LessonServiceTest {
         em.clear();
 
         //then
-        assertThat(lessonService.findLesson(updateLessonId).getTitle()).isEqualTo(title);
-        assertThat(lessonService.findLesson(updateLessonId).getContent()).isEqualTo(content);
+        assertThat(lessonRepository.findById(updateLessonId).getTitle()).isEqualTo(title);
+        assertThat(lessonRepository.findById(updateLessonId).getContent()).isEqualTo(content);
 
 
     }

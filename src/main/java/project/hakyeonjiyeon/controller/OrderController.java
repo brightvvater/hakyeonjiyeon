@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import project.hakyeonjiyeon.domain.Lesson;
 import project.hakyeonjiyeon.domain.Member;
 import project.hakyeonjiyeon.domain.PayMethod;
+import project.hakyeonjiyeon.dto.MyPageFormDto;
 import project.hakyeonjiyeon.dto.OrderCreateDto;
 import project.hakyeonjiyeon.dto.OrderFormDto;
 import project.hakyeonjiyeon.repository.MemberRepository;
@@ -18,6 +19,7 @@ import project.hakyeonjiyeon.service.OrderService;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -27,6 +29,8 @@ import java.util.Optional;
 public class OrderController {
 
     private final OrderService orderService;
+
+    private final MemberRepository memberRepository;
 
 
     @GetMapping
@@ -54,8 +58,20 @@ public class OrderController {
         return "redirect:/";
     }
 
-    /*@GetMapping("/orderList")
-    public String getOrderList() {
+    @GetMapping("/orderList")
+    public String getOrderList(@RequestParam("memberId") Long memberId, Model model) {
 
-    }*/
+        //추후 로그인 멤버 아이디로 변경 요!!!
+
+        List<MyPageFormDto> myPageFormDtos = orderService.selectOrderList(memberId);
+        model.addAttribute("myPageFormList", myPageFormDtos);
+
+        //member와 order간 다대일 조인으로 member도 List로 반환됨, memberRepository를 통해 따로 조회함
+        MyPageFormDto myPageFormDto = new MyPageFormDto();
+        myPageFormDto.setMemberId(memberId);
+        myPageFormDto.setMemberName(memberRepository.findById(memberId).get().getName());
+        model.addAttribute("myPageForm", myPageFormDto);
+
+        return "/myPage/myPage";
+    }
 }

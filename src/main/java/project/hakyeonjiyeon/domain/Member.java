@@ -30,6 +30,9 @@ public class Member {
 
     private String address;
 
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
+
     private void setId(Long id) {
         this.id = id;
     }
@@ -50,19 +53,29 @@ public class Member {
         this.address = address;
     }
 
+    private void setPassword(String password) {
+        this.password = password;
+    }
+
+    private void setGrade(Grade grade) {
+        this.grade = grade;
+    }
+
     @Builder
-    public Member(String name, String nickName, String phoneNumber, String address, String password) {
+    public Member(String name, String nickName, String phoneNumber, String address, String password, Grade grade) {
         this.name = name;
         this.nickName = nickName;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.password = password;
+        this.grade = grade;
     }
 
     public Long updateMember(MemberUpdateDto memberUpdateDto) {
         this.setNickName(memberUpdateDto.getNickName());
         this.setPhoneNumber(memberUpdateDto.getPhoneNumber());
         this.setAddress(memberUpdateDto.getAddress());
+        this.setPassword(memberUpdateDto.getPassword());
 
         return this.getId();
     }

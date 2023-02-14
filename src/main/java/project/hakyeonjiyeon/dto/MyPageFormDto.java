@@ -8,15 +8,17 @@ import lombok.Setter;
 @Setter @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberUpdateDto {
+public class MyPageFormDto {
 
+    private Long memberId;
 
-    private String nickName;
+    private String memberName;
 
-    private String phoneNumber;
+    private String title;
 
-    private String address;
+    private int price;
 
-    private String password;
+    private String teacherName;
+
 
 }

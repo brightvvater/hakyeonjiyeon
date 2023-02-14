@@ -22,7 +22,7 @@ public class MemberService {
 
     //회원가입
     public Long join(MemberCreateDto memberCreateDto) {
-        Member member = new Member(memberCreateDto.getName(), memberCreateDto.getNickName(), memberCreateDto.getPhoneNumber(), memberCreateDto.getAddress(), memberCreateDto.getPassword());
+        Member member = new Member(memberCreateDto.getName(), memberCreateDto.getNickName(), memberCreateDto.getPhoneNumber(), memberCreateDto.getAddress(), memberCreateDto.getPassword(), memberCreateDto.getGrade());
         validationDuplicateMember(member);
         memberRepository.save(member);
         return  member.getId();

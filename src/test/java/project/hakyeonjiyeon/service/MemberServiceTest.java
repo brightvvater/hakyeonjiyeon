@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import project.hakyeonjiyeon.domain.Grade;
 import project.hakyeonjiyeon.domain.Member;
 import project.hakyeonjiyeon.dto.MemberCreateDto;
 import project.hakyeonjiyeon.dto.MemberUpdateDto;
@@ -30,7 +31,7 @@ class MemberServiceTest {
     public void joinMember() {
 
         //given
-        MemberCreateDto MemberCreateDto = new MemberCreateDto("member1", "멤버1", "010-111-1111", "금천구", "123123");
+        MemberCreateDto MemberCreateDto = new MemberCreateDto("member1", "멤버1", "010-111-1111", "금천구", "123123", Grade.MEMBER);
         Long joinMemberId = memberService.join(MemberCreateDto);
 
         //when
@@ -45,9 +46,9 @@ class MemberServiceTest {
     @DisplayName("중복 회원가입 테스트")
     public void duplicateJoinMember() {
         //given
-        MemberCreateDto MemberCreateDto = new MemberCreateDto("member1", "멤버1", "010-111-1111", "금천구", "123123");
-        MemberCreateDto MemberCreateDto1 = new MemberCreateDto("member1", "aa", "010-111-2222", "강남구", "123123");
-        MemberCreateDto MemberCreateDto2 = new MemberCreateDto("member1", "abc", "010-123-123", "금천구", "1111");
+        MemberCreateDto MemberCreateDto = new MemberCreateDto("member1", "멤버1", "010-111-1111", "금천구", "123123", Grade.MEMBER);
+        MemberCreateDto MemberCreateDto1 = new MemberCreateDto("member1", "aa", "010-111-2222", "강남구", "123123",Grade.MEMBER);
+        MemberCreateDto MemberCreateDto2 = new MemberCreateDto("member1", "abc", "010-123-123", "금천구", "1111",Grade.MEMBER);
         memberService.join(MemberCreateDto);
 
 
@@ -62,7 +63,7 @@ class MemberServiceTest {
     @DisplayName("회원 수정 테스트")
     public void updateMember() {
         //given
-        MemberCreateDto MemberCreateDto = new MemberCreateDto("member1", "멤버1", "010-111-1111", "금천구", "123123");
+        MemberCreateDto MemberCreateDto = new MemberCreateDto("member1", "멤버1", "010-111-1111", "금천구", "123123",Grade.MEMBER);
         Long joinMemberId = memberService.join(MemberCreateDto);
 
         MemberUpdateDto memberUpdateDto = new MemberUpdateDto();

@@ -4,16 +4,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import project.hakyeonjiyeon.domain.Category;
-import project.hakyeonjiyeon.domain.Order;
-import project.hakyeonjiyeon.domain.OrderStatus;
-import project.hakyeonjiyeon.domain.Teacher;
+import project.hakyeonjiyeon.domain.*;
 import project.hakyeonjiyeon.dto.LessonCreateDto;
 import project.hakyeonjiyeon.dto.MemberCreateDto;
 import project.hakyeonjiyeon.dto.OrderCreateDto;
-import project.hakyeonjiyeon.domain.PayMethod;
 import project.hakyeonjiyeon.repository.CategoryRepository;
+import project.hakyeonjiyeon.repository.MemberRepository;
 import project.hakyeonjiyeon.repository.OrderRepository;
 import project.hakyeonjiyeon.repository.TeacherRepository;
 
@@ -47,6 +45,9 @@ class OrderServiceTest {
 
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Test
     @DisplayName("주문 생성 테스트")
@@ -110,7 +111,8 @@ class OrderServiceTest {
         Long orderId2 = orderService.createOrder(memberId, lessonId, orderCreateDto);
 
         //when
-        List<Order> orderByMember = orderService.findOrderByMember(memberId);
+        //Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+        List<Order> orderByMember = orderRepository.findByMember(memberId);
         //then
         assertThat(orderByMember.size()).isEqualTo(2);
 
@@ -127,7 +129,7 @@ class OrderServiceTest {
     }
 
     private Long createMember() {
-        MemberCreateDto memberCreateDto = new MemberCreateDto("member1", "멤버1", "010-111-1111", "금천구", "123123");
+        MemberCreateDto memberCreateDto = new MemberCreateDto("member1", "멤버1", "010-111-1111", "금천구", "123123", Grade.MEMBER);
         Long joinMemberId = memberService.join(memberCreateDto);
         return joinMemberId;
 

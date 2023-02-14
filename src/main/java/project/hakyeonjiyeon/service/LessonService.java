@@ -63,12 +63,6 @@ public class LessonService {
     }
 
 
-    //레슨만 조회
-    public Lesson findLesson(Long lessonId) {
-        return lessonRepository.findById(lessonId);
-    }
-
-
 
 
     //레슨 삭제

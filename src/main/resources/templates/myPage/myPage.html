@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>myPage</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+
+<section>
+   <h2 th:text="|안녕하세요! ${myPageForm.memberName}님|">안녕하세요 회원님!!</h2>
+  <!--<table class="table-main">
+        <tr th:each="myPage : ${myPageForm}" >
+            <td th:text="${myPage.title}"></td>
+            <td th:text="${myPage.price}">자신감 있는 말하기를 위해</td>
+            <td th:text="${myPage.teacherName}">자신감 있는 말하기를 위해</td>
+        </tr>
+  </table>-->
+
+    <h2>주문 내역</h2>
+    <div class="orderList-main" th:each="myPageForm : ${myPageFormList}">
+        <div>
+            <span>
+                <img src="/images/136524.png" alt="" width="300" height="150">
+            </span>
+            <span th:text="${myPageForm.title}">주문강의 이름</span>
+            <span th:text="${myPageForm.teacherName}">주문강의 강사이름</span>
+            <span th:text="${myPageForm.price}+'원'">주문강의 가격</span>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>
+

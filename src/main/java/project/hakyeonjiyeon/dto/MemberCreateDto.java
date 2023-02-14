@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.hakyeonjiyeon.domain.Grade;
 
 import javax.validation.constraints.NotBlank;
 
@@ -23,4 +24,6 @@ public class MemberCreateDto {
 
     @NotBlank(message = "비밀번호는 필수입니다.")
     private String password;
+
+    private Grade grade;
 }
