@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.hakyeonjiyeon.domain.Member;
-import project.hakyeonjiyeon.dto.MemberDto;
+import project.hakyeonjiyeon.dto.MemberCreateDto;
 import project.hakyeonjiyeon.dto.MemberUpdateDto;
 import project.hakyeonjiyeon.exception.DuplicateMemberException;
 import project.hakyeonjiyeon.repository.MemberRepository;
@@ -21,8 +21,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     //회원가입
-    public Long join(MemberDto memberDto) {
-        Member member = new Member(memberDto.getName(), memberDto.getNickName(), memberDto.getPhoneNumber(), memberDto.getAddress(), memberDto.getPassword());
+    public Long join(MemberCreateDto memberCreateDto) {
+        Member member = new Member(memberCreateDto.getName(), memberCreateDto.getNickName(), memberCreateDto.getPhoneNumber(), memberCreateDto.getAddress(), memberCreateDto.getPassword());
         validationDuplicateMember(member);
         memberRepository.save(member);
         return  member.getId();

@@ -4,20 +4,24 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.hakyeonjiyeon.domain.Lesson;
-import project.hakyeonjiyeon.domain.Member;
-import project.hakyeonjiyeon.domain.OrderStatus;
+import project.hakyeonjiyeon.domain.PayMethod;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto {
+public class OrderCreateDto {
 
 
+    private Long memberId;
+
+    private Long lessonId;
     private LocalDateTime orderDate;
+
+    @NotBlank(message = "결제 방식을 선택해 주세요.")
+    private PayMethod payMethod;
 
 
 

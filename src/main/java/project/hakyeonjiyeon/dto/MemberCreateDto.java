@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberDto {
+public class MemberCreateDto {
 
     @NotBlank(message = "이름은 필수입니다.")
     private String name;

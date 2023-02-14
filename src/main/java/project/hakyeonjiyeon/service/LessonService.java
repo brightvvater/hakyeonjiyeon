@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import project.hakyeonjiyeon.domain.Category;
 import project.hakyeonjiyeon.domain.Lesson;
 import project.hakyeonjiyeon.domain.Teacher;
+import project.hakyeonjiyeon.dto.LessonCreateDto;
 import project.hakyeonjiyeon.dto.LessonDetailDto;
-import project.hakyeonjiyeon.dto.LessonDto;
 import project.hakyeonjiyeon.dto.LessonMainDto;
 import project.hakyeonjiyeon.dto.LessonUpdateDto;
 import project.hakyeonjiyeon.repository.CategoryRepository;
@@ -30,7 +30,7 @@ public class LessonService {
 
     //레슨 등록
     @Transactional
-    public Long createLesson(Long teacherId, Long categoryId, LessonDto lessonDto) {
+    public Long createLesson(Long teacherId, Long categoryId, LessonCreateDto lessonCreateDto) {
         //강사조회
         Teacher teacher = teacherRepository.findById(teacherId);
 
@@ -39,13 +39,13 @@ public class LessonService {
 
         //레슨저장
         Lesson lesson = Lesson.builder()
-                .title(lessonDto.getTitle())
-                .price(lessonDto.getPrice())
-                .startDate(lessonDto.getStartDate())
-                .endDate(lessonDto.getEndDate())
+                .title(lessonCreateDto.getTitle())
+                .price(lessonCreateDto.getPrice())
+                .startDate(lessonCreateDto.getStartDate())
+                .endDate(lessonCreateDto.getEndDate())
                 .teacher(teacher)
                 .category(category)
-                .content(lessonDto.getContent())
+                .content(lessonCreateDto.getContent())
                 .build();
         lessonRepository.save(lesson);
         return lesson.getId();
@@ -68,10 +68,8 @@ public class LessonService {
         return lessonRepository.findById(lessonId);
     }
 
-    //레슨 전체 조회
-    public List<Lesson> findAllLesson() {
-        return lessonRepository.findAllLesson();
-    }
+
+
 
     //레슨 삭제
     public void deleteLesson(Long lessonId) {

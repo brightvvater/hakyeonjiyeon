@@ -26,6 +26,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
+    @Enumerated(EnumType.STRING)
+    private PayMethod payMethod;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -35,11 +38,12 @@ public class Order {
     private Lesson lesson;
 
     @Builder
-    public Order(LocalDateTime orderDate, OrderStatus orderStatus, Member member, Lesson lesson) {
+    public Order(LocalDateTime orderDate, OrderStatus orderStatus, Member member, Lesson lesson, PayMethod payMethod) {
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
         this.member = member;
         this.lesson = lesson;
+        this.payMethod = payMethod;
     }
 
     public void cancelOrder() {
@@ -69,5 +73,9 @@ public class Order {
 
     private void setCancelDate(LocalDateTime cancelDate) {
         this.cancelDate = cancelDate;
+    }
+
+    private void setPayMethod(PayMethod payMethod) {
+        this.payMethod = payMethod;
     }
 }

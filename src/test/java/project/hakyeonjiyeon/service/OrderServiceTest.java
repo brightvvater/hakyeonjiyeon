@@ -1,19 +1,18 @@
 package project.hakyeonjiyeon.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import project.hakyeonjiyeon.domain.Category;
 import project.hakyeonjiyeon.domain.Order;
 import project.hakyeonjiyeon.domain.OrderStatus;
 import project.hakyeonjiyeon.domain.Teacher;
-import project.hakyeonjiyeon.dto.LessonDto;
-import project.hakyeonjiyeon.dto.MemberDto;
-import project.hakyeonjiyeon.dto.OrderDto;
+import project.hakyeonjiyeon.dto.LessonCreateDto;
+import project.hakyeonjiyeon.dto.MemberCreateDto;
+import project.hakyeonjiyeon.dto.OrderCreateDto;
+import project.hakyeonjiyeon.domain.PayMethod;
 import project.hakyeonjiyeon.repository.CategoryRepository;
 import project.hakyeonjiyeon.repository.OrderRepository;
 import project.hakyeonjiyeon.repository.TeacherRepository;
@@ -23,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -60,9 +58,11 @@ class OrderServiceTest {
         Long lessonId = createLesson();
 
         //when
-        OrderDto orderDto = new OrderDto(LocalDateTime.now());
+        OrderCreateDto orderCreateDto = new OrderCreateDto();
+        orderCreateDto.setOrderDate(LocalDateTime.now());
+        orderCreateDto.setPayMethod(PayMethod.CARD);
         //주문 생성
-        Long orderId = orderService.createOrder(memberId, lessonId, orderDto);
+        Long orderId = orderService.createOrder(memberId, lessonId, orderCreateDto);
 
         em.flush();
         em.clear();
@@ -81,8 +81,10 @@ class OrderServiceTest {
         //레슨 생성
         Long lessonId = createLesson();
         //주문 생성
-        OrderDto orderDto = new OrderDto(LocalDateTime.now());
-        Long orderId = orderService.createOrder(memberId, lessonId, orderDto);
+        OrderCreateDto orderCreateDto = new OrderCreateDto();
+        orderCreateDto.setOrderDate(LocalDateTime.now());
+        orderCreateDto.setPayMethod(PayMethod.CARD);
+        Long orderId = orderService.createOrder(memberId, lessonId, orderCreateDto);
 
         //when
         orderService.cancelOrder(orderId);
@@ -101,9 +103,11 @@ class OrderServiceTest {
         //레슨 생성
         Long lessonId = createLesson();
         //주문 생성
-        OrderDto orderDto = new OrderDto(LocalDateTime.now());
-        Long orderId = orderService.createOrder(memberId, lessonId, orderDto);
-        Long orderId2 = orderService.createOrder(memberId, lessonId, orderDto);
+        OrderCreateDto orderCreateDto = new OrderCreateDto();
+        orderCreateDto.setOrderDate(LocalDateTime.now());
+        orderCreateDto.setPayMethod(PayMethod.CARD);
+        Long orderId = orderService.createOrder(memberId, lessonId, orderCreateDto);
+        Long orderId2 = orderService.createOrder(memberId, lessonId, orderCreateDto);
 
         //when
         List<Order> orderByMember = orderService.findOrderByMember(memberId);
@@ -113,31 +117,31 @@ class OrderServiceTest {
     }
 
     private Long createLesson() {
-        LessonDto lessonDto = createLessonDto();
+        LessonCreateDto lessonCreateDto = createLessonDto();
 
         Long teacherId = createTeacher();
         Long categoryId = createCategory();
 
-        Long lessonId = lessonService.createLesson(teacherId, categoryId, lessonDto);
+        Long lessonId = lessonService.createLesson(teacherId, categoryId, lessonCreateDto);
         return lessonId;
     }
 
     private Long createMember() {
-        MemberDto memberDto = new MemberDto("member1", "멤버1", "010-111-1111", "금천구", "123123");
-        Long joinMemberId = memberService.join(memberDto);
+        MemberCreateDto memberCreateDto = new MemberCreateDto("member1", "멤버1", "010-111-1111", "금천구", "123123");
+        Long joinMemberId = memberService.join(memberCreateDto);
         return joinMemberId;
 
     }
 
 
-    private static LessonDto createLessonDto() {
-        LessonDto lessonDto = new LessonDto();
-        lessonDto.setTitle("레슨1");
-        lessonDto.setStartDate(LocalDateTime.now());
-        lessonDto.setEndDate(LocalDateTime.now());
-        lessonDto.setPrice(10000);
-        lessonDto.setContent("레슨내용1");
-        return lessonDto;
+    private static LessonCreateDto createLessonDto() {
+        LessonCreateDto lessonCreateDto = new LessonCreateDto();
+        lessonCreateDto.setTitle("레슨1");
+        lessonCreateDto.setStartDate(LocalDateTime.now());
+        lessonCreateDto.setEndDate(LocalDateTime.now());
+        lessonCreateDto.setPrice(10000);
+        lessonCreateDto.setContent("레슨내용1");
+        return lessonCreateDto;
     }
 
     private Long createCategory() {

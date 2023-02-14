@@ -4,17 +4,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import project.hakyeonjiyeon.domain.Lesson;
 import project.hakyeonjiyeon.domain.Member;
+import project.hakyeonjiyeon.domain.PayMethod;
+import project.hakyeonjiyeon.dto.OrderCreateDto;
+import project.hakyeonjiyeon.dto.OrderFormDto;
 import project.hakyeonjiyeon.repository.MemberRepository;
 import project.hakyeonjiyeon.service.LessonService;
 import project.hakyeonjiyeon.service.MemberService;
 import project.hakyeonjiyeon.service.OrderService;
 
+import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -25,24 +28,34 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    private final LessonService lessonService;
-
-    private final MemberRepository memberRepository;
 
     @GetMapping
-    public String OrderForm(@RequestParam("lessonId") Long lessonId, Model model) { //dto로 변환해서 전해주기!!!!!!!
+    public String OrderForm(@RequestParam("lessonId") Long lessonId,
+                            @RequestParam("memberId") Long memberId,
+                            Model model) {
 
-        Lesson lesson = lessonService.findLesson(lessonId);
-        model.addAttribute("lesson", lesson);
-        log.info("lesson.getTitle={}", lesson.getTitle());
+        //로그인 멤버 아이디 넘어오도록 변경 요!!
+        OrderFormDto orderFormDto = orderService.showMemberAndLesson(lessonId, memberId);
 
-        //member 가져오기
-        //insert into member(member_id, ADDRESS, name, nick_name, phone_number, password) values(1, '123', '조현수','brightvvater', '010-9256-5814','123123');
-        Long memberId = 1L;
-        Optional<Member> member = memberRepository.findById(memberId);
-        model.addAttribute("member",member.get());
-        log.info("member.getNickName={}", member.get().getNickName());
+        //log.info("orderFormDto.payMethod={}", orderFormDto.getPayMethod());
+        model.addAttribute("orderForm", orderFormDto);
+        model.addAttribute("payMethod", PayMethod.values());
+
         return "/order/orderForm";
     }
 
+    @PostMapping
+    public String order(@Valid @ModelAttribute OrderCreateDto orderCreateDto, BindingResult bindingResult) {
+        //validation!!!
+
+        orderCreateDto.setOrderDate(LocalDateTime.now());
+        //log.info("orderCreateDto.payMethod={}", orderCreateDto.getPayMethod());
+        orderService.createOrder(orderCreateDto.getMemberId(),orderCreateDto.getLessonId(),orderCreateDto);
+        return "redirect:/";
+    }
+
+    /*@GetMapping("/orderList")
+    public String getOrderList() {
+
+    }*/
 }

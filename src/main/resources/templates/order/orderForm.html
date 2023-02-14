@@ -7,22 +7,24 @@
 </head>
 <body>
 <section>
-    <form>
+    <form action="/order" method="post" th:object="${orderForm}">
         <div>
             <h2>주문자 정보</h2>
-            이름: <input type="text" th:field="${member.name}"> <br>
-            휴대폰 번호: <input type="text" th:field="${member.phoneNumber}"> <br>
-            <input type="hidden" th:field="${member.id}">
+            이름: <input type="text" th:field="*{name}"> <br>
+            휴대폰 번호: <input type="text" th:field="*{phoneNumber}"> <br>
+            <input type="hidden" th:field="*{memberId}">
         </div>
         <div>
             <h2>상품 정보</h2>
-            <input type="text" th:field="${lesson.title}"> <br>
-            <input type="hidden" th:field="${lesson.id}">
+            <input type="text" th:field="*{title}"> <br>
+            <input type="hidden" th:field="*{lessonId}">
         </div>
         <div>
             <h2>결제 방식</h2>
-            <input type="button" value="신용카드">
-            <input type="button" value="계좌이체">
+            <div th:each="payMethod : ${payMethod}" >
+                <input type="radio" th:value="${payMethod.name()}" th:field="*{payMethod}">
+                <label th:for="${#ids.prev('payMethod')}" th:text="${payMethod.description}"></label>
+            </div>
         </div>
         <button type="submit">결제하기</button>
     </form>

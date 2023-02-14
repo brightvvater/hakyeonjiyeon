@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import project.hakyeonjiyeon.dto.TeacherUpdateDto;
+import project.hakyeonjiyeon.dto.TeacherCreateDto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,10 +52,10 @@ public class Teacher {
     }
 
 
-    public Long updateTeacher(TeacherUpdateDto teacherUpdateDto) {
-        this.setName(teacherUpdateDto.getName());
-        this.setPhoneNumber(teacherUpdateDto.getPhoneNumber());
-        this.setIntroduction(teacherUpdateDto.getIntroduction());
+    public Long updateTeacher(TeacherCreateDto teacherCreateDto) {
+        this.setName(teacherCreateDto.getName());
+        this.setPhoneNumber(teacherCreateDto.getPhoneNumber());
+        this.setIntroduction(teacherCreateDto.getIntroduction());
         return  this.getId();
     }
 }

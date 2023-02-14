@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import project.hakyeonjiyeon.domain.Category;
 import project.hakyeonjiyeon.domain.Lesson;
 import project.hakyeonjiyeon.domain.Teacher;
-import project.hakyeonjiyeon.dto.LessonDto;
+import project.hakyeonjiyeon.dto.LessonCreateDto;
 import project.hakyeonjiyeon.dto.LessonUpdateDto;
 import project.hakyeonjiyeon.repository.CategoryRepository;
 import project.hakyeonjiyeon.repository.LessonRepository;
@@ -51,13 +51,13 @@ class LessonServiceTest {
     @DisplayName("레슨등록 테스트")
     public void createLesson() {
         //given
-        LessonDto lessonDto = createLessonDto();
+        LessonCreateDto lessonCreateDto = createLessonDto();
 
         Long teacherId = createTeacher();
         Long categoryId = createCategory();
 
         //when
-        Long lessonId = lessonService.createLesson(teacherId, categoryId, lessonDto);
+        Long lessonId = lessonService.createLesson(teacherId, categoryId, lessonCreateDto);
 
         em.flush();
         em.clear();
@@ -73,13 +73,13 @@ class LessonServiceTest {
     @DisplayName("레슨 수정 테스트")
     public void updateLesson() {
         //given
-        LessonDto lessonDto = createLessonDto();
+        LessonCreateDto lessonCreateDto = createLessonDto();
 
         Long teacherId = createTeacher();
         Long categoryId = createCategory();
 
 
-        Long lessonId = lessonService.createLesson(teacherId, categoryId, lessonDto);
+        Long lessonId = lessonService.createLesson(teacherId, categoryId, lessonCreateDto);
         em.flush();
         em.clear();
 
@@ -106,39 +106,38 @@ class LessonServiceTest {
 
     @Test
     @DisplayName("레슨 전체 조회 및 삭제 테스트")
-    @Rollback(value = false)
     public void LessonList() {
         //given
-        LessonDto lessonDto = createLessonDto();
+        LessonCreateDto lessonCreateDto = createLessonDto();
 
         Long teacherId = createTeacher();
         Long categoryId = createCategory();
 
         //when
-        Long lessonId = lessonService.createLesson(teacherId, categoryId, lessonDto);
-        Long lessonId2 = lessonService.createLesson(teacherId, categoryId, lessonDto);
+        Long lessonId = lessonService.createLesson(teacherId, categoryId, lessonCreateDto);
+        Long lessonId2 = lessonService.createLesson(teacherId, categoryId, lessonCreateDto);
 
-        List<Lesson> allLesson = lessonService.findAllLesson();
+        List<Lesson> allLesson = lessonRepository.findAllLesson();
         assertThat(allLesson.size()).isEqualTo(2);
 
         em.clear();
 
         lessonService.deleteLesson(lessonId);
-        assertThat(lessonService.findAllLesson().size()).isEqualTo(1);
+        assertThat(lessonRepository.findAllLesson().size()).isEqualTo(1);
 
     }
 
 
 
 
-    private static LessonDto createLessonDto() {
-        LessonDto lessonDto = new LessonDto();
-        lessonDto.setTitle("레슨1");
-        lessonDto.setStartDate(LocalDateTime.now());
-        lessonDto.setEndDate(LocalDateTime.now());
-        lessonDto.setPrice(10000);
-        lessonDto.setContent("레슨내용1");
-        return lessonDto;
+    private static LessonCreateDto createLessonDto() {
+        LessonCreateDto lessonCreateDto = new LessonCreateDto();
+        lessonCreateDto.setTitle("레슨1");
+        lessonCreateDto.setStartDate(LocalDateTime.now());
+        lessonCreateDto.setEndDate(LocalDateTime.now());
+        lessonCreateDto.setPrice(10000);
+        lessonCreateDto.setContent("레슨내용1");
+        return lessonCreateDto;
     }
 
     private Long createCategory() {
