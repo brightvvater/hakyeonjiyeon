@@ -66,6 +66,7 @@ public class LessonService {
 
 
     //레슨 삭제
+    @Transactional
     public void deleteLesson(Long lessonId) {
         lessonRepository.deleteLesson(lessonId);
     }

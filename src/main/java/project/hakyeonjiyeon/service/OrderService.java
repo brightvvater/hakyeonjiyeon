@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Slf4j
 public class OrderService {
@@ -33,6 +33,7 @@ public class OrderService {
 
 
     //주문 생성
+    @Transactional
     public Long createOrder(Long memberId, Long lessonId, OrderCreateDto orderCreateDto) {
         //회원 조회
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
@@ -51,6 +52,7 @@ public class OrderService {
     }
 
     //주문 취소
+    @Transactional
     public void cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId);
         order.cancelOrder();

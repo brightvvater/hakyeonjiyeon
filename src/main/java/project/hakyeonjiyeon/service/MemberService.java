@@ -21,6 +21,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     //회원가입
+    @Transactional
     public Long join(MemberCreateDto memberCreateDto) {
         Member member = new Member(memberCreateDto.getName(), memberCreateDto.getNickName(), memberCreateDto.getPhoneNumber(), memberCreateDto.getAddress(), memberCreateDto.getPassword(), memberCreateDto.getGrade());
         validationDuplicateMember(member);
