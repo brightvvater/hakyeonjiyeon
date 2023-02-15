@@ -6,8 +6,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-
-
 <section>
     <!--<table class="table-main">
         <tr th:each="lesson : ${lessons}" >
@@ -15,9 +13,9 @@
             <td th:text="${lesson.lessonId}">자신감 있는 말하기를 위해</td>
         </tr>
     </table>-->
-    <h2>연단 공포증 극복하기</h2>
-    <div class="table-main" th:each="lesson : ${lessons}">
-        <div th:if="${lesson.categoryName eq 'category1'}">
+    <div th:each="category : ${categoryList}" th:object="${category}">
+    <h2 th:text="*{name}">레슨이름</h2>
+        <div th:each="lesson: ${lessons}" th:if="${lesson.categoryName} == *{name}">
             <span>
                 <a th:href="@{/lesson/detail/{param1}(param1=${lesson.lessonId})}"><img src="/images/136524.png" alt="" width="300" height="150"></a>
             </span>
@@ -26,7 +24,8 @@
         </div>
     </div>
 
-    <h2>태어난 김에 세계여행 가즈아~</h2>
+    <!--
+    <h2></h2>
     <div class="table-main">
         <div th:each="lesson : ${lessons}" th:if="${lesson.categoryName eq '카테고리1'}">
             <span>
@@ -39,14 +38,14 @@
 
     <h2>나도 사장님!</h2>
     <div class="table-main">
-        <div th:each="lesson : ${lessons}" th:if="${lesson.categoryName eq 'category3'}">
+        <div th:each="lesson : ${lessons}" th:if="${lesson.categoryName eq '나도 사장님!'}">
             <span>
                 <a th:href="@{/lesson/detail/{param1}(param1=${lesson.lessonId})}"><img src="/images/136524.png" alt="" width="300" height="150"></a>
             </span>
             <span th:text="${lesson.title}">자신감 있는 말하기를 위해</span>
             <span th:text="${lesson.categoryName} + '|'+ ${lesson.teacherName}">자기개발|최효정 스피치</span>
         </div>
-    </div>
+    </div>-->
 
 </section>
 </body>

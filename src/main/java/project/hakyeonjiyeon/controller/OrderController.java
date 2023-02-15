@@ -35,10 +35,11 @@ public class OrderController {
 
     @GetMapping
     public String OrderForm(@RequestParam("lessonId") Long lessonId,
-                            @RequestParam("memberId") Long memberId,
+                            //@RequestParam("memberId") Long memberId,
                             Model model) {
 
         //로그인 멤버 아이디 넘어오도록 변경 요!!
+        Long memberId =1L;
         OrderFormDto orderFormDto = orderService.showMemberAndLesson(lessonId, memberId);
 
         //log.info("orderFormDto.payMethod={}", orderFormDto.getPayMethod());

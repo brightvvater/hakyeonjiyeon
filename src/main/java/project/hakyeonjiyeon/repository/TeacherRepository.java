@@ -21,5 +21,11 @@ public class TeacherRepository {
         return  em.find(Teacher.class, teacherId);
     }
 
+    public List<Teacher> findAll() {
+        return em.createQuery(
+                "select t from Teacher t"
+        ).getResultList();
+    }
+
 
 }

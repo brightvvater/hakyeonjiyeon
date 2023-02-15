@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>addTeacher</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+
+<section>
+    <h2>강사를 등록해주세요!!</h2>
+    <form action="/addTeacher" method="post" th:object="${teacherForm}">
+        <div>
+            이름: <input type="text" th:field="*{name}"> <br>
+            휴대폰 번호: <input type="text" th:field="*{phoneNumber}"> <br>
+            강사 소개: <textarea th:field="*{introduction}"></textarea> <br>
+        </div>
+        <button type="submit">등록하기</button>
+    </form>
+
+</section>
+</body>
+</html>

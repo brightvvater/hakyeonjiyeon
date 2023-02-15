@@ -35,9 +35,10 @@
         <a href=""><img src="/images/136524.png" alt="" width="300" height="150"></a><br>
         <span th:text="${lesson.content}">내용</span>
     </div>
-    <form>
-        <input hidden="hidden" th:text="${lesson.lessonId}">
-        <input type="submit">구매하기</input>
+    <form th:action="@{/order}" method="get">
+        <input type="hidden" th:field="${lesson.lessonId}">
+        <!--memberId-->
+        <input type="submit" value="구매하기">
     </form>
 
 </section>

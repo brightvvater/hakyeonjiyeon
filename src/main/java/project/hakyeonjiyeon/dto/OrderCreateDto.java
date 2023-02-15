@@ -7,6 +7,7 @@ import lombok.Setter;
 import project.hakyeonjiyeon.domain.PayMethod;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter @Setter
@@ -20,7 +21,7 @@ public class OrderCreateDto {
     private Long lessonId;
     private LocalDateTime orderDate;
 
-    @NotBlank(message = "결제 방식을 선택해 주세요.")
+    @NotNull(message = "결제 방식을 선택해 주세요.")
     private PayMethod payMethod;
 
 

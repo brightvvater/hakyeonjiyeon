@@ -20,4 +20,6 @@ public class TeacherCreateDto {
 
     @NotBlank(message = "강사 소개를 입력해주세요.")
     private String introduction;
+
+
 }
