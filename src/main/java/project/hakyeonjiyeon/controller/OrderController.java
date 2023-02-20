@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/order")
+@RequestMapping("order")
 @Slf4j
 public class OrderController {
 
@@ -46,7 +46,7 @@ public class OrderController {
         model.addAttribute("orderForm", orderFormDto);
         model.addAttribute("payMethod", PayMethod.values());
 
-        return "/order/orderForm";
+        return "order/orderForm";
     }
 
     @PostMapping
@@ -59,7 +59,7 @@ public class OrderController {
         return "redirect:/";
     }
 
-    @GetMapping("/orderList")
+    @GetMapping("orderList")
     public String getOrderList(@RequestParam("memberId") Long memberId, Model model) {
 
         //추후 로그인 멤버 아이디로 변경 요!!!
@@ -73,6 +73,6 @@ public class OrderController {
         myPageFormDto.setMemberName(memberRepository.findById(memberId).get().getName());
         model.addAttribute("myPageForm", myPageFormDto);
 
-        return "/myPage/myPage";
+        return "myPage/myPage";
     }
 }

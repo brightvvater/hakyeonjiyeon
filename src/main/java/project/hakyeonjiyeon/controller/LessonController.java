@@ -13,7 +13,7 @@ import project.hakyeonjiyeon.service.LessonService;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/lesson")
+@RequestMapping("lesson")
 public class LessonController {
 
     private final LessonService lessonService;
@@ -22,6 +22,6 @@ public class LessonController {
     public String lessonDetail(@PathVariable("lessonId") Long lessonId, Model model) {
         LessonDetailDto lessonDetail = lessonService.findLessonDetail(lessonId);
         model.addAttribute("lesson", lessonDetail);
-        return "/lesson/detail";
+        return "lesson/detail";
     }
 }

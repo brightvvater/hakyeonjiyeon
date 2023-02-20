@@ -28,18 +28,18 @@ public class AdminController {
     /*
      * 강사등록폼
      */
-    @GetMapping("/addTeacher")
+    @GetMapping("addTeacher")
     public String addTeacherForm(Model model) {
         TeacherCreateDto teacherCreateDto = new TeacherCreateDto();
         model.addAttribute("teacherForm", teacherCreateDto);
-        return "/teacher/addTeacherForm";
+        return "teacher/addTeacherForm";
 
     }
 
     /*
      * 강사등록
      */
-    @PostMapping("/addTeacher")
+    @PostMapping("addTeacher")
     public String addTeacher(@ModelAttribute TeacherCreateDto teacherCreateDto) {
         //validation!!
 
@@ -62,7 +62,7 @@ public class AdminController {
     /*
      * 카테고리등록
      */
-    @PostMapping("/addCategory")
+    @PostMapping("addCategory")
     public String addCategory(@ModelAttribute CategoryCreateDto categoryCreateDto) {
         //validation!!
 
@@ -74,7 +74,7 @@ public class AdminController {
     /*
      * 레슨등록폼
      */
-    @GetMapping("/addLesson")
+    @GetMapping("addLesson")
     public String addLessonForm(Model model) {
         LessonCreateDto lessonCreateDto = new LessonCreateDto();
 
@@ -89,7 +89,7 @@ public class AdminController {
 
         model.addAttribute("lessonForm", lessonCreateDto);
 
-        return "/lesson/addLessonForm";
+        return "lesson/addLessonForm";
 
     }
 
@@ -97,7 +97,7 @@ public class AdminController {
     /*
      * 레슨등록
      */
-    @PostMapping("/addLesson")
+    @PostMapping("addLesson")
     public String addLesson(@ModelAttribute LessonCreateDto lessonCreateDto) {
         //validation!!
 
