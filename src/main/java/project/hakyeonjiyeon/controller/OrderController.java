@@ -59,7 +59,7 @@ public class OrderController {
         return "redirect:/";
     }
 
-    @GetMapping("orderList")
+    @GetMapping("/orderList")
     public String getOrderList(@RequestParam("memberId") Long memberId, Model model) {
 
         //추후 로그인 멤버 아이디로 변경 요!!!
