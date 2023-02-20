@@ -55,7 +55,7 @@ public class AdminController {
     public String addCategoryForm(Model model) {
         CategoryCreateDto categoryCreateDto = new CategoryCreateDto();
         model.addAttribute("categoryForm", categoryCreateDto);
-        return "/category/addCategoryForm";
+        return "category/addCategoryForm";
 
     }
 
