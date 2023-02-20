@@ -10,9 +10,10 @@
 
 <section>
     <h2>카테고리를 등록해주세요!!</h2>
-    <form action="/addCategory" method="post" th:object="${categoryForm}">
+    <form action="/addCategory" method="post" th:object="${categoryCreateDto}">
         <div>
-            이름: <input type="text" th:field="*{name}"> <br>
+            이름: <input type="text" th:field="*{name}" placeholder="예)카테고리1" th:errorclass="field-error" class="form-control"> <br>
+            <div class="field-error" th:errors="*{name}">이름 오류</div>
         </div>
         <button type="submit">등록하기</button>
     </form>

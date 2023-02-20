@@ -4,17 +4,21 @@
 <head>
     <title>addTeacher</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
 </head>
 <body>
 
 
 <section>
     <h2>강사를 등록해주세요!!</h2>
-    <form action="/addTeacher" method="post" th:object="${teacherForm}">
+    <form action="addTeacher" th:action method="post" th:object="${teacherCreateDto}">
         <div>
-            이름: <input type="text" th:field="*{name}"> <br>
-            휴대폰 번호: <input type="text" th:field="*{phoneNumber}"> <br>
-            강사 소개: <textarea th:field="*{introduction}"></textarea> <br>
+            이름: <input type="text" th:field="*{name}" placeholder="예)홍길동" th:errorclass="field-error" class="form-control"> <br>
+            <div class="field-error" th:errors="*{name}">이름 오류</div>
+            휴대폰 번호: <input type="text" th:field="*{phoneNumber}" placeholder="예) 010-1234-5678" th:errorclass="field-error" class="form-control"> <br>
+            <div class="field-error" th:errors="*{phoneNumber}">휴대폰 오류</div>
+            강사 소개: <textarea th:field="*{introduction}" th:errorclass="field-error" class="form-control"></textarea> <br>
+            <div class="field-error" th:errors="*{introduction}">강사소개 오류</div>
         </div>
         <button type="submit">등록하기</button>
     </form>

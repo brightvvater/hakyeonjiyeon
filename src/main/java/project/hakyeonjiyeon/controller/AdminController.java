@@ -4,14 +4,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.hakyeonjiyeon.dto.*;
 import project.hakyeonjiyeon.service.CategoryService;
 import project.hakyeonjiyeon.service.LessonService;
 import project.hakyeonjiyeon.service.TeacherService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -31,7 +34,7 @@ public class AdminController {
     @GetMapping("addTeacher")
     public String addTeacherForm(Model model) {
         TeacherCreateDto teacherCreateDto = new TeacherCreateDto();
-        model.addAttribute("teacherForm", teacherCreateDto);
+        model.addAttribute("teacherCreateDto", teacherCreateDto);
         return "teacher/addTeacherForm";
 
     }
@@ -40,8 +43,12 @@ public class AdminController {
      * 강사등록
      */
     @PostMapping("addTeacher")
-    public String addTeacher(@ModelAttribute TeacherCreateDto teacherCreateDto) {
+    public String addTeacher(@Valid @ModelAttribute TeacherCreateDto teacherCreateDto, BindingResult bindingResult) {
         //validation!!
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "teacher/addTeacherForm";
+        }
 
         Long teacherId = teacherService.addTeacher(teacherCreateDto);
         return "redirect:/";
@@ -54,7 +61,7 @@ public class AdminController {
     @GetMapping("addCategory")
     public String addCategoryForm(Model model) {
         CategoryCreateDto categoryCreateDto = new CategoryCreateDto();
-        model.addAttribute("categoryForm", categoryCreateDto);
+        model.addAttribute("categoryCreateDto", categoryCreateDto);
         return "category/addCategoryForm";
 
     }
@@ -63,8 +70,12 @@ public class AdminController {
      * 카테고리등록
      */
     @PostMapping("addCategory")
-    public String addCategory(@ModelAttribute CategoryCreateDto categoryCreateDto) {
+    public String addCategory(@Valid @ModelAttribute CategoryCreateDto categoryCreateDto, BindingResult bindingResult) {
         //validation!!
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "category/addCategoryForm";
+        }
 
         Long categoryId = categoryService.addCategory(categoryCreateDto);
         return "redirect:/";
@@ -87,7 +98,7 @@ public class AdminController {
         lessonCreateDto.setCategoryList(categoryList);
 
 
-        model.addAttribute("lessonForm", lessonCreateDto);
+        model.addAttribute("lessonCreateDto", lessonCreateDto);
 
         return "lesson/addLessonForm";
 
@@ -98,8 +109,20 @@ public class AdminController {
      * 레슨등록
      */
     @PostMapping("addLesson")
-    public String addLesson(@ModelAttribute LessonCreateDto lessonCreateDto) {
+    public String addLesson(@Valid @ModelAttribute LessonCreateDto lessonCreateDto, BindingResult bindingResult) {
         //validation!!
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            //강사조회
+            List<TeacherFormDto> teacherList = teacherService.getTeacherList();
+            lessonCreateDto.setTeacherList(teacherList);
+
+            //카테고리 조회
+            List<CategoryFormDto> categoryList = categoryService.getCategoryList();
+            lessonCreateDto.setCategoryList(categoryList);
+
+            return "lesson/addLessonForm";
+        }
 
         Long teacherId = lessonCreateDto.getTeacherId();
         Long categoryId = lessonCreateDto.getCategoryId();

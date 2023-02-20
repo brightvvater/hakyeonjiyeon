@@ -9,7 +9,7 @@ import project.hakyeonjiyeon.domain.Category;
 import project.hakyeonjiyeon.domain.Teacher;
 
 import javax.persistence.Lob;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,13 +22,16 @@ public class LessonCreateDto {
     private String title;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @NotNull(message = "시작일을 입력해주세요.")
     private LocalDateTime startDate;
 
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @NotNull(message = "종료일을 입력해주세요.")
     private LocalDateTime endDate;
 
-    @NotBlank(message = "가격을 입력해주세요.")
+    @NotNull(message = "가격을 입력해주세요.")
+    @Min(value = 10000, message = "최소 10000원 이상 입력해주세요.")
     private int price;
 
     @Lob
@@ -38,7 +41,9 @@ public class LessonCreateDto {
 
     private List<CategoryFormDto> categoryList;
 
+    @NotNull(message = "카테고리를 선택해주세요.")
     private Long categoryId;
 
+    @NotNull(message = "강사를 선택해주세요.")
     private Long teacherId;
 }

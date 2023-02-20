@@ -10,21 +10,28 @@
 
 <section>
     <h2>레슨을 등록해주세요!!</h2>
-    <form action="/addLesson" method="post" th:object="${lessonForm}">
+    <form action="/addLesson" method="post" th:object="${lessonCreateDto}">
         <div>
-            이름: <input type="text" th:field="*{title}"> <br>
-            시작일: <input type="text" th:field="*{startDate}"> <br>
-            종료일: <input type="text" th:field="*{endDate}"> <br>
+            이름: <input type="text" th:field="*{title}" th:errorclass="field-error" class="form-control" placeholder="예) 새로운 레슨"> <br>
+                <div class="field-error" th:errors="*{title}">이름 오류</div>
+            시작일: <input type="text" th:field="*{startDate}" th:errorclass="field-error" class="form-control" placeholder="예) 2020-06-30T12:00:00"> <br>
+                <div class="field-error" th:errors="*{startDate}">시작일 오류</div>
+            종료일: <input type="text" th:field="*{endDate}" th:errorclass="field-error" class="form-control" placeholder="예) 2020-06-30T12:00:00"> <br>
+                <div class="field-error" th:errors="*{endDate}">종료일 오류</div>
             카테고리: <select class="form-select" th:field="*{categoryId}">
                         <option value="">==카테고리==</option>
                         <option  th:each="category : *{categoryList}" th:text="${category.name}" th:value="${category.categoryId}"></option>
                     </select><br>
+                    <div class="field-error" th:errors="*{categoryId}">카테고리 오류</div>
+
             강사: <select class="form-select" th:field="*{teacherId}">
                     <option value="">==강사==</option>
                     <option  th:each="teacher : *{teacherList}" th:text="${teacher.name}" th:value="${teacher.teacherId}"></option>
                 </select><br>
-            가격 : <input type="text" th:field="*{price}"> <br>
-            내용 : <textarea th:field="*{content}"></textarea> <br>
+                <div class="field-error" th:errors="*{teacherId}">강사 오류</div>
+            가격 : <input type="text" th:field="*{price}" th:errorclass="field-error" class="form-control"> <br>
+                <div class="field-error" th:errors="*{price}" placeholder="예) 20000">가격 오류</div>
+            내용 : <textarea th:field="*{content}" th:errorclass="field-error" class="form-control"></textarea> <br>
         </div>
         <button type="submit">등록하기</button>
     </form>

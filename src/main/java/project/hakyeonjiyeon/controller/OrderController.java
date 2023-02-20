@@ -52,6 +52,9 @@ public class OrderController {
     @PostMapping
     public String order(@Valid @ModelAttribute OrderCreateDto orderCreateDto, BindingResult bindingResult) {
         //validation!!!
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+        }
 
         orderCreateDto.setOrderDate(LocalDateTime.now());
         //log.info("orderCreateDto.payMethod={}", orderCreateDto.getPayMethod());
