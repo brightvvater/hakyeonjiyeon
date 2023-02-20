@@ -51,7 +51,7 @@ public class AdminController {
     /*
      * 카테고리등록폼
      */
-    @GetMapping("/addCategory")
+    @GetMapping("addCategory")
     public String addCategoryForm(Model model) {
         CategoryCreateDto categoryCreateDto = new CategoryCreateDto();
         model.addAttribute("categoryForm", categoryCreateDto);
