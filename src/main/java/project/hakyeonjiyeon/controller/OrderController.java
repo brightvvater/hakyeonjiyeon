@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("order")
+@RequestMapping("/order")
 @Slf4j
 public class OrderController {
 
