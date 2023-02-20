@@ -4,6 +4,10 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
+jar {
+	enabled=false
+}
+
 group = 'project'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -41,6 +45,4 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-jar {
-	enabled=false
-}
+
