@@ -34,5 +34,9 @@ public class LessonDetailDto {
 
     private String introduction;
 
+    private String teacherImage;
+
+    private String lessonImage;
+
 
 }

@@ -52,12 +52,6 @@ public class Teacher {
 
     }
 
-    @Builder
-    public Teacher(String name, String phoneNumber, String introduction) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.introduction = introduction;
-    }
 
     @Builder
     public Teacher(String name, String phoneNumber, String introduction, List<TeacherFile> teacherFiles) {

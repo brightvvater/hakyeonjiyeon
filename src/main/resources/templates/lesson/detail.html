@@ -7,7 +7,7 @@
 </head>
 <body>
 <section>
-    <a href=""><img src="/images/136524.png" alt="" width="300" height="150"></a><br>
+    <a href=""><img th:src="${lesson.lessonImage}" alt="첨부이미지" th:if="${lesson.lessonImage != null}"  width="300" height="150"/></a><br>
     <h2 th:text="${lesson.title}">제목</h2>
     <h3 th:text="${lesson.teacherName}">강사</h3>
     <div class="form-group">
@@ -26,13 +26,12 @@
 
     <h2>강사 소개</h2>
     <div>
-        <a href=""><img src="/images/136524.png" alt="" width="300" height="150"></a><br>
+        <a href=""><img th:src="${lesson.teacherImage}" alt="첨부이미지" th:if="${lesson.teacherImage != null}"  width="300" height="150"/></a><br>
         <span th:text="${lesson.introduction}">소개</span>
     </div>
 
     <h2>내용</h2>
     <div>
-        <a href=""><img src="/images/136524.png" alt="" width="300" height="150"></a><br>
         <span th:text="${lesson.content}">내용</span>
     </div>
     <form th:action="@{/order}" method="get">

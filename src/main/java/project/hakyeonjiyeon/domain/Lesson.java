@@ -53,7 +53,7 @@ public class Lesson {
 
 
 
-    @Builder
+    @Builder //null point exception 안나게 lessonfile null 값 허용...?
     public Lesson(String title, LocalDateTime startDate, LocalDateTime endDate, int price, String content, Teacher teacher, Category category, List<LessonFile> lessonFiles) {
         this.title = title;
         this.startDate = startDate;
@@ -67,17 +67,6 @@ public class Lesson {
         }
     }
 
-    @Builder
-    public Lesson(String title, LocalDateTime startDate, LocalDateTime endDate, int price, String content, Teacher teacher, Category category) {
-        this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.price = price;
-        this.content = content;
-        this.teacher = teacher;
-        this.category = category;
-
-    }
 
 
 

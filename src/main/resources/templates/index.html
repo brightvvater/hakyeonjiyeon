@@ -17,10 +17,11 @@
     <h2 th:text="*{name}">레슨이름</h2>
         <div th:each="lesson: ${lessons}" th:if="${lesson.categoryName} == *{name}">
             <span>
-                <a th:href="@{/lesson/detail/{param1}(param1=${lesson.lessonId})}"><img src="/images/136524.png" alt="" width="300" height="150"></a>
+                <a th:href="@{/lesson/detail/{param1}(param1=${lesson.lessonId})}">
+                <img id="imgId" th:src="${lesson.imageName}" alt="첨부이미지" th:if="${lesson.imageName != null}"  width="300" height="150"/></a>
             </span>
-            <span th:text="${lesson.title}">자신감 있는 말하기를 위해</span>
-            <span th:text="${lesson.categoryName} + '|'+ ${lesson.teacherName}"> 스피치</span>
+            <span th:text="${lesson.title}">레슨제목</span>
+            <span th:text="${lesson.categoryName} + '|'+ ${lesson.teacherName}"> 레슨카테고리+강사이름</span>
         </div>
     </div>
 

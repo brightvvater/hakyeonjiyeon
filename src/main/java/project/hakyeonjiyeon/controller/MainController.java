@@ -2,6 +2,7 @@ package project.hakyeonjiyeon.controller;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MainController {
 
     private final LessonService lessonService;
@@ -24,6 +26,10 @@ public class MainController {
     @GetMapping("/")
     public String main(Model model) {
         List<LessonMainDto> lessons = lessonService.findLessonWithTeacherAndCategory();
+
+        for (LessonMainDto lesson : lessons) {
+            log.info("imageName={}",lesson.getImageName());
+        }
 
         //카테고리 넣어주기?
         LessonMainDto lessonMainDto = new LessonMainDto();

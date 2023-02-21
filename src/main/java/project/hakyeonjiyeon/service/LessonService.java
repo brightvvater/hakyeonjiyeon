@@ -97,6 +97,9 @@ public class LessonService {
             lessonMainDto.setCategoryName(lesson.getCategory().getName());
             lessonMainDto.setTeacherName(lesson.getTeacher().getName());
             lessonMainDto.setLessonId(lesson.getId());
+            for (LessonFile lessonFile : lesson.getLessonFiles()) {
+                lessonMainDto.setImageName(lessonFile.getStoreFileName());
+            }
             list.add(lessonMainDto);
         }
 
@@ -122,6 +125,12 @@ public class LessonService {
         lessonDetailDto.setTeacherName(lessonDetail.getTeacher().getName());
         lessonDetailDto.setContent(lessonDetail.getContent());
         lessonDetailDto.setIntroduction(lessonDetail.getTeacher().getIntroduction());
+        for (LessonFile lessonFile : lessonDetail.getLessonFiles()) {
+            lessonDetailDto.setLessonImage(lessonFile.getStoreFileName());
+        }
+        for (TeacherFile teacherFile: lessonDetail.getTeacher().getTeacherFiles()) {
+            lessonDetailDto.setTeacherImage(teacherFile.getStoreFileName());
+        }
 
         return lessonDetailDto;
     }
