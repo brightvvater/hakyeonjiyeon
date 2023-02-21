@@ -10,27 +10,27 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LessonFile {
+public class TeacherFile {
 
     @Id
     @GeneratedValue
-    @Column(name = "lesson_file_id")
+    @Column(name = "teacher_file_id")
     private Long id;
 
 
     @Enumerated(EnumType.STRING)
     private MainStatus mainStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lesson_id")
-    private Lesson lesson;
-
     private String uploadFileName;
 
     private String storeFileName;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
     @Builder
-    public LessonFile(MainStatus mainStatus, String uploadFileName, String storeFileName) {
+    public TeacherFile(MainStatus mainStatus, String uploadFileName, String storeFileName) {
         this.mainStatus = mainStatus;
         this.uploadFileName = uploadFileName;
         this.storeFileName = storeFileName;
@@ -38,12 +38,12 @@ public class LessonFile {
 
 
 
-    private void setMainStatus(MainStatus mainStatus) {
-        this.mainStatus = mainStatus;
+    private void setId(Long id) {
+        this.id = id;
     }
 
-    public void setLesson(Lesson lesson) {
-        this.lesson = lesson;
+    private void setMainStatus(MainStatus mainStatus) {
+        this.mainStatus = mainStatus;
     }
 
     private void setUploadFileName(String uploadFileName) {
@@ -52,5 +52,9 @@ public class LessonFile {
 
     private void setStoreFileName(String storeFileName) {
         this.storeFileName = storeFileName;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }

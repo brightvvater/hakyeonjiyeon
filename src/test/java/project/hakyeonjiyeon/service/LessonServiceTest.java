@@ -21,6 +21,7 @@ import project.hakyeonjiyeon.repository.TeacherRepository;
 
 import javax.persistence.EntityManager;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -51,7 +52,7 @@ class LessonServiceTest {
 
     @Test
     @DisplayName("레슨등록 테스트")
-    public void createLesson() {
+    public void createLesson() throws IOException {
         //given
         LessonCreateDto lessonCreateDto = createLessonDto();
 
@@ -73,7 +74,7 @@ class LessonServiceTest {
 
     @Test
     @DisplayName("레슨 수정 테스트")
-    public void updateLesson() {
+    public void updateLesson() throws IOException {
         //given
         LessonCreateDto lessonCreateDto = createLessonDto();
 
@@ -108,7 +109,7 @@ class LessonServiceTest {
 
     @Test
     @DisplayName("레슨 전체 조회 및 삭제 테스트")
-    public void LessonList() {
+    public void LessonList() throws IOException {
         //given
         LessonCreateDto lessonCreateDto = createLessonDto();
 

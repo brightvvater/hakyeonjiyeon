@@ -4,9 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+import project.hakyeonjiyeon.domain.Teacher;
+import project.hakyeonjiyeon.domain.TeacherFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Setter @Getter
 @NoArgsConstructor
@@ -22,6 +26,8 @@ public class TeacherCreateDto {
 
     @NotBlank(message = "강사 소개를 입력해주세요.")
     private String introduction;
+
+    private List<MultipartFile> teacherFiles;
 
 
 }

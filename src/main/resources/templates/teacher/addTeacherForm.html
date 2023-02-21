@@ -11,7 +11,7 @@
 
 <section>
     <h2>강사를 등록해주세요!!</h2>
-    <form action="addTeacher" th:action method="post" th:object="${teacherCreateDto}">
+    <form action="addTeacher" th:action method="post" th:object="${teacherCreateDto}" enctype="multipart/form-data">
         <div>
             이름: <input type="text" th:field="*{name}" placeholder="예)홍길동" th:errorclass="field-error" class="form-control"> <br>
             <div class="field-error" th:errors="*{name}">이름 오류</div>
@@ -19,6 +19,9 @@
             <div class="field-error" th:errors="*{phoneNumber}">휴대폰 오류</div>
             강사 소개: <textarea th:field="*{introduction}" th:errorclass="field-error" class="form-control"></textarea> <br>
             <div class="field-error" th:errors="*{introduction}">강사소개 오류</div>
+            첨부파일1: <input type="file" th:field="*{teacherFiles}" multiple="multiple"><br>
+            첨부파일2: <input type="file" th:field="*{teacherFiles}" multiple="multiple"><br>
+
         </div>
         <button type="submit">등록하기</button>
     </form>

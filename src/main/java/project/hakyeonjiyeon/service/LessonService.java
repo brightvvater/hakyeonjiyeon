@@ -4,17 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.hakyeonjiyeon.domain.Category;
-import project.hakyeonjiyeon.domain.Lesson;
-import project.hakyeonjiyeon.domain.Teacher;
-import project.hakyeonjiyeon.dto.LessonCreateDto;
-import project.hakyeonjiyeon.dto.LessonDetailDto;
-import project.hakyeonjiyeon.dto.LessonMainDto;
-import project.hakyeonjiyeon.dto.LessonUpdateDto;
+import org.springframework.web.multipart.MultipartFile;
+import project.hakyeonjiyeon.domain.*;
+import project.hakyeonjiyeon.dto.*;
 import project.hakyeonjiyeon.repository.CategoryRepository;
 import project.hakyeonjiyeon.repository.LessonRepository;
 import project.hakyeonjiyeon.repository.TeacherRepository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +25,18 @@ public class LessonService {
     private final CategoryRepository categoryRepository;
     private final LessonRepository lessonRepository;
 
+    private final FileUploadService fileUploadService;
+
+
+
     //레슨 등록
     @Transactional
-    public Long createLesson(Long teacherId, Long categoryId, LessonCreateDto lessonCreateDto) {
+    public Long createLesson(Long teacherId, Long categoryId, LessonCreateDto lessonCreateDto) throws IOException {
+
+        List<MultipartFile> multipartFiles = lessonCreateDto.getLessonFiles();
+        //파일 업로드
+        List<LessonFile> lessonFiles = fileUploadService.uploadLessonFiles(multipartFiles);
+
         //강사조회
         Teacher teacher = teacherRepository.findById(teacherId);
 
@@ -46,6 +52,7 @@ public class LessonService {
                 .teacher(teacher)
                 .category(category)
                 .content(lessonCreateDto.getContent())
+                .lessonFiles(lessonFiles)
                 .build();
         lessonRepository.save(lesson);
         return lesson.getId();

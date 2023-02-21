@@ -42,8 +42,30 @@ public class Lesson {
     private Category category;
 
     @OneToMany(mappedBy ="lesson" ,cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LessonFile> lessonFiles = new ArrayList<>();//?? 양방향 매핑할 건지??
+    private List<LessonFile> lessonFiles = new ArrayList<>();
 
+    //==연관관계 편의 메서드==//
+    public void addLessonFiles(LessonFile lessonFile) {
+        lessonFiles.add(lessonFile);
+        lessonFile.setLesson(this);
+    }
+
+
+
+
+    @Builder
+    public Lesson(String title, LocalDateTime startDate, LocalDateTime endDate, int price, String content, Teacher teacher, Category category, List<LessonFile> lessonFiles) {
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.price = price;
+        this.content = content;
+        this.teacher = teacher;
+        this.category = category;
+        for (LessonFile lessonFile : lessonFiles) {
+            addLessonFiles(lessonFile);
+        }
+    }
 
     @Builder
     public Lesson(String title, LocalDateTime startDate, LocalDateTime endDate, int price, String content, Teacher teacher, Category category) {
@@ -54,10 +76,10 @@ public class Lesson {
         this.content = content;
         this.teacher = teacher;
         this.category = category;
-        /*for (LessonFile lessonFile : lessonFiles) {
-            this.lessonFiles.add(lessonFile);
-        }*/
+
     }
+
+
 
     private void setId(Long id) {
         this.id = id;

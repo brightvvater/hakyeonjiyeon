@@ -8,13 +8,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.hakyeonjiyeon.dto.*;
 import project.hakyeonjiyeon.service.CategoryService;
+import project.hakyeonjiyeon.service.FileUploadService;
 import project.hakyeonjiyeon.service.LessonService;
 import project.hakyeonjiyeon.service.TeacherService;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -27,6 +31,8 @@ public class AdminController {
     private final CategoryService categoryService;
 
     private final LessonService lessonService;
+
+    private final FileUploadService fileUploadService;
 
     /*
      * 강사등록폼
@@ -43,7 +49,7 @@ public class AdminController {
      * 강사등록
      */
     @PostMapping("addTeacher")
-    public String addTeacher(@Valid @ModelAttribute TeacherCreateDto teacherCreateDto, BindingResult bindingResult) {
+    public String addTeacher(@Valid @ModelAttribute TeacherCreateDto teacherCreateDto, BindingResult bindingResult) throws IOException {
         //validation!!
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
@@ -109,7 +115,7 @@ public class AdminController {
      * 레슨등록
      */
     @PostMapping("addLesson")
-    public String addLesson(@Valid @ModelAttribute LessonCreateDto lessonCreateDto, BindingResult bindingResult) {
+    public String addLesson(@Valid @ModelAttribute LessonCreateDto lessonCreateDto, BindingResult bindingResult) throws IOException {
         //validation!!
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
@@ -128,6 +134,7 @@ public class AdminController {
         Long categoryId = lessonCreateDto.getCategoryId();
 
         Long lessonId = lessonService.createLesson(teacherId, categoryId, lessonCreateDto);
+
         return "redirect:/";
     }
 }

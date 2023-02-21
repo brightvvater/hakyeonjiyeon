@@ -17,6 +17,7 @@ import project.hakyeonjiyeon.repository.OrderRepository;
 import project.hakyeonjiyeon.repository.TeacherRepository;
 
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -53,7 +54,7 @@ class OrderServiceTest {
 
     @Test
     @DisplayName("주문 생성 테스트")
-    public void createOrder() {
+    public void createOrder() throws IOException {
         //given
         //회원 생성
         Long memberId = createMember();
@@ -77,7 +78,7 @@ class OrderServiceTest {
 
     @Test
     @DisplayName("주문 취소 테스트")
-    public void cancelOrder() {
+    public void cancelOrder() throws IOException {
         //given
         //회원 생성
         Long memberId = createMember();
@@ -99,7 +100,7 @@ class OrderServiceTest {
 
     @Test
     @DisplayName("회원의 주문 리스트 조회 테스트")
-    public void orderList() {
+    public void orderList() throws IOException {
         //given
         //회원 생성
         Long memberId = createMember();
@@ -120,7 +121,7 @@ class OrderServiceTest {
 
     }
 
-    private Long createLesson() {
+    private Long createLesson() throws IOException {
         LessonCreateDto lessonCreateDto = createLessonDto();
 
         Long teacherId = createTeacher();

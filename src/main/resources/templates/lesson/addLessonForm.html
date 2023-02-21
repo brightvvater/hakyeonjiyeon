@@ -10,7 +10,7 @@
 
 <section>
     <h2>레슨을 등록해주세요!!</h2>
-    <form action="/addLesson" method="post" th:object="${lessonCreateDto}">
+    <form action="/addLesson" method="post" th:object="${lessonCreateDto}" enctype="multipart/form-data">
         <div>
             이름: <input type="text" th:field="*{title}" th:errorclass="field-error" class="form-control" placeholder="예) 새로운 레슨"> <br>
                 <div class="field-error" th:errors="*{title}">이름 오류</div>
@@ -32,6 +32,8 @@
             가격 : <input type="text" th:field="*{price}" th:errorclass="field-error" class="form-control"> <br>
                 <div class="field-error" th:errors="*{price}" placeholder="예) 20000">가격 오류</div>
             내용 : <textarea th:field="*{content}" th:errorclass="field-error" class="form-control"></textarea> <br>
+            이미지: <input type="file" th:field="*{lessonFiles}" multiple="multiple">
+            이미지: <input type="file" th:field="*{lessonFiles}" multiple="multiple">
         </div>
         <button type="submit">등록하기</button>
     </form>

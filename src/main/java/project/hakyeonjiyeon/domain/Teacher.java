@@ -6,10 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.hakyeonjiyeon.dto.TeacherCreateDto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +26,9 @@ public class Teacher {
 
     private String introduction;
 
+    @OneToMany(mappedBy ="teacher" ,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TeacherFile> teacherFiles = new ArrayList<>();
+
     private void setId(Long id) {
         this.id = id;
     }
@@ -43,13 +45,30 @@ public class Teacher {
         this.introduction = introduction;
     }
 
+    //==연관관계 편의 메서드==//
+    public void addTeacherFile(TeacherFile teacherFile) {
+        teacherFiles.add(teacherFile);
+        teacherFile.setTeacher(this);
+
+    }
+
     @Builder
     public Teacher(String name, String phoneNumber, String introduction) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.introduction = introduction;
-
     }
+
+    @Builder
+    public Teacher(String name, String phoneNumber, String introduction, List<TeacherFile> teacherFiles) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.introduction = introduction;
+        for (TeacherFile teacherFile : teacherFiles) {
+            addTeacherFile(teacherFile);
+        }
+    }
+
 
 
     public Long updateTeacher(TeacherCreateDto teacherCreateDto) {
