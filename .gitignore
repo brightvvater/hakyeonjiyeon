@@ -34,4 +34,5 @@ out/
 ### VS Code ###
 .vscode/
 
-application.properties
+/application.properties
+/application-test.properties

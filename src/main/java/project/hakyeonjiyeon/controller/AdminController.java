@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.hakyeonjiyeon.dto.*;
-import project.hakyeonjiyeon.service.CategoryService;
-import project.hakyeonjiyeon.service.FileUploadService;
-import project.hakyeonjiyeon.service.LessonService;
-import project.hakyeonjiyeon.service.TeacherService;
+import project.hakyeonjiyeon.service.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -32,7 +29,7 @@ public class AdminController {
 
     private final LessonService lessonService;
 
-    private final FileUploadService fileUploadService;
+    private final BoardService boardService;
 
     /*
      * 강사등록폼
@@ -137,4 +134,31 @@ public class AdminController {
 
         return "redirect:/";
     }
+
+    /*
+    * 게시판 등록폼
+    */
+    @GetMapping("addBoard")
+    public String addBoardForm(Model model) {
+        BoardCreateDto boardCreateDto = new BoardCreateDto();
+        model.addAttribute("boardCreateDto", boardCreateDto);
+        return "board/addBoardForm";
+
+    }
+
+    /*
+     * 게시판 등록
+     */
+    @PostMapping("addBoard")
+    public String addBoard(@Valid @ModelAttribute BoardCreateDto boardCreateDto, BindingResult bindingResult) {
+        //validation!!
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "board/addBoardForm";
+        }
+
+        Long boardId = boardService.createBoard(boardCreateDto);
+        return "redirect:/";
+    }
+
 }
