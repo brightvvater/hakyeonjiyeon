@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>PostDetail</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<section>
+    <h2 th:text="${post.boardName}">게시판명</h2>
+    <h3 th:text="${post.title}">게시물 제목</h3>
+
+    <div>
+        <span th:text="${post.content}">내용</span>
+    </div>
+
+</section>
+</body>
+<script>
+
+</script>
+</html>
+

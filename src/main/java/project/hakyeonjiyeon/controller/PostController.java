@@ -5,12 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import project.hakyeonjiyeon.dto.BoardFormDto;
 import project.hakyeonjiyeon.dto.PostCreateDto;
+import project.hakyeonjiyeon.dto.PostFormDto;
 import project.hakyeonjiyeon.service.BoardService;
 import project.hakyeonjiyeon.service.PostService;
 
@@ -33,12 +31,13 @@ public class PostController {
     @GetMapping("/main")
     public String boardMain(Model model) {
 
-        //게시판 목록
+        //게시판 목록??
         List<BoardFormDto> boardList = boardService.getBoardList();
         model.addAttribute("boardList", boardList);
 
         //게시물 목록
-        //////////////////////////////////////////////////////////해야댐
+        List<PostFormDto> postList = postService.getListWithMember();
+        model.addAttribute("postList", postList);
 
         return "board/main";
     }
@@ -76,5 +75,16 @@ public class PostController {
 
         Long postId = postService.createPost(memberId, postCreateDto);
         return "redirect:/post/main";
+    }
+
+    /*
+     * 게시물 상세 폼
+     */
+    @GetMapping("/detail/{postId}")
+    public String postDetail(@PathVariable("postId") Long postId, Model model) {
+        PostFormDto post = postService.getPostWithMember(postId);
+        model.addAttribute("post", post);
+
+        return "board/detail";
     }
 }

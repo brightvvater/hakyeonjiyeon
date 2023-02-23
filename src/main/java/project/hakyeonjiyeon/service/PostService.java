@@ -7,11 +7,14 @@ import project.hakyeonjiyeon.domain.Board;
 import project.hakyeonjiyeon.domain.Member;
 import project.hakyeonjiyeon.domain.Post;
 import project.hakyeonjiyeon.dto.PostCreateDto;
+import project.hakyeonjiyeon.dto.PostFormDto;
 import project.hakyeonjiyeon.repository.BoardRepository;
 import project.hakyeonjiyeon.repository.MemberRepository;
 import project.hakyeonjiyeon.repository.PostRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -47,4 +50,38 @@ public class PostService {
     }
 
     //게시물 전체 조회
+    public List<PostFormDto> getListWithMember() {
+        List<Post> posts = postRepository.findAll();
+
+        List<PostFormDto> list = new ArrayList<>();
+        for (Post post : posts) {
+            PostFormDto postFormDto = new PostFormDto();
+            postFormDto.setTitle(post.getTitle());
+            postFormDto.setContent(post.getContent());
+            postFormDto.setPostDate(post.getPostDate());
+            postFormDto.setPostId(post.getId());
+            postFormDto.setNickName(post.getMember().getNickName());
+            postFormDto.setBoardName(post.getBoard().getName());
+
+            list.add(postFormDto);
+        }
+
+        return list;
+    }
+
+    //특정 게시물 조회
+    public PostFormDto getPostWithMember(Long postId) {
+
+        Post post = postRepository.findByIdWithMember(postId);
+        PostFormDto postFormDto = new PostFormDto();
+        postFormDto.setTitle(post.getTitle());
+        postFormDto.setContent(post.getContent());
+        postFormDto.setPostDate(post.getPostDate());
+        postFormDto.setPostId(post.getId());
+        postFormDto.setNickName(post.getMember().getNickName());
+        postFormDto.setBoardName(post.getBoard().getName());
+
+        return postFormDto;
+    }
+
 }

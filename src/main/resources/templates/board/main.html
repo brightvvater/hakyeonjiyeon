@@ -7,15 +7,18 @@
 </head>
 <body>
 <section>
-    게시판 메인입니다...!!!
-    <!--<table th:each="board: ${boardList}">
-       <tr>
-           <td th:text="${board.name}"></td>
-        </tr>
-    </table>-->
     <ul>
         <li><a href="/post/addPost"> 게시글 등록하기</a></li>
     </ul>
+
+    <div th:each="post: ${postList}">
+        <div>_____________________________________________________________________________________________________________________________________________________</div>
+        <h3 th:text="${post.boardName}">게시판 이름</h3>
+        <a th:href="@{/post/detail/{param1}(param1=${post.postId})}">
+            <span th:text="${post.title}">게시물 제목</span>
+        </a>
+            <span th:text="${post.nickName}">게시자 닉네임</span>
+        </div>
 </section>
 </body>
 </html>

@@ -25,6 +25,18 @@ public class PostRepository {
     public List<Post> findAll() {
         return em.createQuery(
                 "select p from Post p"
+                + " join fetch p.member"
+                + " join fetch p.board"
         ).getResultList();
+    }
+
+    public Post findByIdWithMember(Long postId) {
+        return (Post) em.createQuery(
+                "select p from Post p"
+                +" join fetch p.member"
+                +" join fetch p.board"
+                +" where p.id=:id"
+        ).setParameter("id",postId)
+                .getSingleResult();
     }
 }
