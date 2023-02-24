@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +54,9 @@ class OrderServiceTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
     @DisplayName("주문 생성 테스트")
@@ -134,7 +138,7 @@ class OrderServiceTest {
     }
 
     private Long createMember() {
-        MemberCreateDto memberCreateDto = new MemberCreateDto("member1", "멤버1", "010-111-1111", "금천구", "123123", Grade.MEMBER);
+        MemberCreateDto memberCreateDto = new MemberCreateDto("이름","아이디1","닉네임","010-9256-5814","주소","123","gildong@naver.com");
         Long joinMemberId = memberService.join(memberCreateDto);
         return joinMemberId;
 

@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import project.hakyeonjiyeon.dto.MemberCreateDto;
 import project.hakyeonjiyeon.dto.MemberUpdateDto;
 
 import javax.persistence.*;
@@ -20,6 +22,8 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    private String authId;
+
     private String name;
 
     private String nickName;
@@ -30,11 +34,17 @@ public class Member {
 
     private String address;
 
+    private String email;
+
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
     private void setId(Long id) {
         this.id = id;
+    }
+
+    private void setAuthId(String authId) {
+        this.authId = authId;
     }
 
     private void setName(String name) {
@@ -45,6 +55,10 @@ public class Member {
         this.nickName = nickName;
     }
 
+    private void setPassword(String password) {
+        this.password = password;
+    }
+
     private void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -53,22 +67,27 @@ public class Member {
         this.address = address;
     }
 
-    private void setPassword(String password) {
-        this.password = password;
+    private void setEmail(String email) {
+        this.email = email;
     }
 
     private void setGrade(Grade grade) {
         this.grade = grade;
     }
 
-    @Builder
-    public Member(String name, String nickName, String phoneNumber, String address, String password, Grade grade) {
-        this.name = name;
-        this.nickName = nickName;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.password = password;
-        this.grade = grade;
+    public static Member createMember(MemberCreateDto memberCreateDto, PasswordEncoder passwordEncoder) {
+        Member member = new Member();
+        member.setAuthId(memberCreateDto.getAuthId());
+        member.setName(memberCreateDto.getName());
+        member.setNickName(memberCreateDto.getNickName());
+        member.setAddress(memberCreateDto.getAddress());
+        member.setPhoneNumber(memberCreateDto.getPhoneNumber());
+        member.setGrade(Grade.MEMBER);
+        member.setEmail(memberCreateDto.getEmail());
+        String password = passwordEncoder.encode(memberCreateDto.getPassword());
+        member.setPassword(password);
+
+        return member;
     }
 
     public Long updateMember(MemberUpdateDto memberUpdateDto) {

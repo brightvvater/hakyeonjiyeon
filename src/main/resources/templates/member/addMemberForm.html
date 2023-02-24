@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>addMember</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+
+<section>
+    <h2>회원가입</h2>
+    <form action="/member/new" method="post" th:object="${memberCreateDto}">
+        <div>
+            이름: <input type="text" th:field="*{name}" placeholder="예)홍길동" th:errorclass="field-error" class="form-control"> <br>
+            <div class="field-error" th:errors="*{name}">이름 오류</div>
+        </div>
+        <div>
+            아이디: <input type="text" th:field="*{authId}" placeholder="아이디" th:errorclass="field-error" class="form-control"> <br>
+            <div class="field-error" th:errors="*{authId}">아이디 오류</div>
+        </div>
+        <div>
+            비밀번호: <input type="password" th:field="*{password}" placeholder="비밀번호" th:errorclass="field-error" class="form-control"> <br>
+            <div class="field-error" th:errors="*{password}">비밀번호 오류</div>
+        </div>
+        <div>
+            닉네임: <input type="text" th:field="*{nickName}" placeholder="닉네임" th:errorclass="field-error" class="form-control"> <br>
+            <div class="field-error" th:errors="*{nickName}">닉네임 오류</div>
+        </div>
+        <div>
+            전화번호: <input type="text" th:field="*{phoneNumber}" placeholder="예) 010-1234-5678" th:errorclass="field-error" class="form-control"> <br>
+            <div class="field-error" th:errors="*{phoneNumber}">전화번호 오류</div>
+        </div>
+        <div>
+            이메일: <input type="text" th:field="*{email}" placeholder="예) gildong@mail.com" th:errorclass="field-error" class="form-control"> <br>
+            <div class="field-error" th:errors="*{email}">이메일 오류</div>
+        </div>
+        <div>
+            주소: <input type="text" th:field="*{address}" placeholder="예)서울시 금천구" th:errorclass="field-error" class="form-control"> <br>
+            <div class="field-error" th:errors="*{address}">주소 오류</div>
+        </div>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <button type="submit">등록하기</button>
+    </form>
+
+</section>
+</body>
+</html>

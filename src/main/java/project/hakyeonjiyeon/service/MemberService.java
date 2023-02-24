@@ -2,6 +2,11 @@ package project.hakyeonjiyeon.service;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.hakyeonjiyeon.domain.Member;
@@ -16,27 +21,29 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MemberService {
+public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     //회원가입
     @Transactional
     public Long join(MemberCreateDto memberCreateDto) {
-        Member member = new Member(memberCreateDto.getName(), memberCreateDto.getNickName(), memberCreateDto.getPhoneNumber(), memberCreateDto.getAddress(), memberCreateDto.getPassword(), memberCreateDto.getGrade());
+        Member member = Member.createMember(memberCreateDto, passwordEncoder);
         validationDuplicateMember(member);
         memberRepository.save(member);
         return  member.getId();
 
     }
 
+
+    ///중복회원검사
     private void validationDuplicateMember(Member member) {
         //EXCEPTION
-        List<Member> findMembers = memberRepository.findByName(member.getName());
-        for (Member findMember : findMembers) {
-            if (findMember.getPassword().equals(member.getPassword())) {
-                throw new DuplicateMemberException("이미 존재하는 회원입니다");
-            }
+        List<Member> findMember = memberRepository.findByAuthId(member.getAuthId());
+        if (!findMember.isEmpty()) {
+            throw new DuplicateMemberException("이미 존재하는 회원입니다");
         }
     }
 
@@ -50,5 +57,19 @@ public class MemberService {
     //회원탈퇴
 
 
+    //로그인
+    @Override
+    public UserDetails loadUserByUsername(String authId) throws UsernameNotFoundException {
+        List<Member> members = memberRepository.findByAuthId(authId);
+        if (members.isEmpty()) {
+            throw new UsernameNotFoundException(authId);
+        }
 
+        return User.builder()
+                .username(members.get(0).getName())
+                .password(members.get(0).getPassword())
+                .roles(members.get(0).getGrade().toString())
+                .build();
+
+    }
 }
