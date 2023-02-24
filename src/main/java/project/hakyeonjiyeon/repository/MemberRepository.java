@@ -23,10 +23,10 @@ public class MemberRepository {
         return Optional.ofNullable(member);
     }
 
-    public List<Member> findByName(String name) {
+    public List<Member> findByAuthId(String authId) {
         return em.createQuery(
-                "select m from Member m where m.name= :name", Member.class)
-                .setParameter("name",name)
+                "select m from Member m where m.authId= :authId", Member.class)
+                .setParameter("authId",authId)
                 .getResultList();
     }
 

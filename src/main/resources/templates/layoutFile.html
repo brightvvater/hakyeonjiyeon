@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title th:replace="${title}">레이아웃 타이틀</title>
     <link rel="stylesheet" type="text/css" href="/css/index.css">
@@ -12,6 +13,9 @@
         <li><a href="/addCategory"> 카테고리 등록하기</a></li>
         <li><a href="/addTeacher"> 강사 등록하기</a></li>
         <li><a href="/addBoard"> 게시판 등록하기</a></li>
+        <li><a href="/member/new"> 회원가입</a></li>
+        <li sec:authorize="isAnonymous()"><a href="/member/login"> 로그인</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/member/logout"> 로그아웃</a></li>
         <li><a href="/order/orderList?memberId=1">마이페이지/주문내역</a></li>
         <li><a href="/post/main">게시판</a></li>
 
