@@ -3,7 +3,7 @@
 
 <h4>참여인원: 1명</h4>
 <h4>프로젝트 주제: 학원 매칭 서비스 개발</h4>
-<h4>사용기술: springboot,spring mvc, jpa, h2 database, aws ec2, aws s3, aws rds(mysql), thymeleaf </h4>
+<h4>사용기술: java, springboot,spring mvc, jpa, h2 database, aws ec2, aws s3, aws rds(mysql), thymeleaf , git</h4>
 <h4>내용</h4>
 spring 내부기능을 활용한 validation 및 error message 지정 <p><p>
 erd 및 클래스 다이어그램 설계 <p>
