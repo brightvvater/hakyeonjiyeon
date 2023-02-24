@@ -2,6 +2,8 @@ package project.hakyeonjiyeon.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,11 +37,15 @@ public class OrderController {
 
     @GetMapping
     public String OrderForm(@RequestParam("lessonId") Long lessonId,
-                            //@RequestParam("memberId") Long memberId,
-                            Model model) {
+                            Model model, Authentication authentication) {
 
-        //로그인 멤버 아이디 넘어오도록 변경 요!!
-        Long memberId =1L;
+        //로그인 멤버
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        //log.info("userDetails={}", userDetails);
+        //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
+        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername());
+
+
         OrderFormDto orderFormDto = orderService.showMemberAndLesson(lessonId, memberId);
 
         //log.info("orderFormDto.payMethod={}", orderFormDto.getPayMethod());
@@ -63,9 +69,13 @@ public class OrderController {
     }
 
     @GetMapping("/orderList")
-    public String getOrderList(@RequestParam("memberId") Long memberId, Model model) {
+    public String getOrderList(Model model, Authentication authentication) {
 
-        //추후 로그인 멤버 아이디로 변경 요!!!
+        //로그인멤버
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        //log.info("userDetails={}", userDetails);
+        //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
+        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername());
 
         List<MyPageFormDto> myPageFormDtos = orderService.selectOrderList(memberId);
         model.addAttribute("myPageFormList", myPageFormDtos);

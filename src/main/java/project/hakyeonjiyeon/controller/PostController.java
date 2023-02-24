@@ -2,6 +2,8 @@ package project.hakyeonjiyeon.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import project.hakyeonjiyeon.dto.BoardFormDto;
 import project.hakyeonjiyeon.dto.PostCreateDto;
 import project.hakyeonjiyeon.dto.PostFormDto;
+import project.hakyeonjiyeon.repository.MemberRepository;
 import project.hakyeonjiyeon.service.BoardService;
+import project.hakyeonjiyeon.service.MemberService;
 import project.hakyeonjiyeon.service.PostService;
 
 import javax.validation.Valid;
@@ -24,6 +28,8 @@ public class PostController {
     private final BoardService boardService;
 
     private final PostService postService;
+
+    private final MemberRepository memberRepository;
 
     /*
      * 메인페이지
@@ -60,7 +66,7 @@ public class PostController {
      * 게시글 등록
      */
     @PostMapping("/addPost")
-    public String addPost(@Valid @ModelAttribute PostCreateDto postCreateDto, BindingResult bindingResult) {
+    public String addPost(@Valid @ModelAttribute PostCreateDto postCreateDto, BindingResult bindingResult, Authentication authentication) {
         //validation!!
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
@@ -71,7 +77,13 @@ public class PostController {
 
             return "board/addPostForm";
         }
-        Long memberId = 1L; //추후 로그인 생성 후 변경 필요~~~!!!!!!!!!!!!!!!!!!!!!!!!
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        //log.info("userDetails={}", userDetails);
+        //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
+
+
+        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername());
 
         Long postId = postService.createPost(memberId, postCreateDto);
         return "redirect:/post/main";

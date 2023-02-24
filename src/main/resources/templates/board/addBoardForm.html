@@ -15,6 +15,7 @@
             이름: <input type="text" th:field="*{name}" placeholder="예)게시판1" th:errorclass="field-error" class="form-control"> <br>
             <div class="field-error" th:errors="*{name}">이름 오류</div>
         </div>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <button type="submit">등록하기</button>
     </form>
 

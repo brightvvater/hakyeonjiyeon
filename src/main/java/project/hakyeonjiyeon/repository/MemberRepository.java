@@ -30,6 +30,13 @@ public class MemberRepository {
                 .getResultList();
     }
 
+    public Long findIdByUserName(String userName) {
+        return em.createQuery(
+                "select m from Member m where m.name=:name", Member.class
+        ).setParameter("name", userName)
+                .getSingleResult().getId();
+    }
+
 
 
 

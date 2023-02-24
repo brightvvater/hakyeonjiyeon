@@ -16,7 +16,7 @@
         <li><a href="/member/new"> 회원가입</a></li>
         <li sec:authorize="isAnonymous()"><a href="/member/login"> 로그인</a></li>
         <li sec:authorize="isAuthenticated()"><a href="/member/logout"> 로그아웃</a></li>
-        <li><a href="/order/orderList?memberId=1">마이페이지/주문내역</a></li>
+        <li><a href="/order/orderList">마이페이지/주문내역</a></li>
         <li><a href="/post/main">게시판</a></li>
 
     </ul>
