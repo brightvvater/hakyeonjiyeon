@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -84,6 +85,7 @@ public class PostController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         //log.info("userDetails={}", userDetails);
         //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
+
 
 
         Long memberId = memberRepository.findIdByUserName(userDetails.getUsername()); //추후 변경 요~~~

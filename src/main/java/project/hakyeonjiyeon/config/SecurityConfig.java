@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/");
 
         http.authorizeRequests()
-                .mvcMatchers("/","/member/**","post/main").permitAll()
+                .mvcMatchers("/","/member/**","/post/main").permitAll()
                 .mvcMatchers("/addTeacher","/addCategory","/addLesson","/addBoard").hasAnyAuthority("ROLE_ADMIN")
                 .anyRequest()
                 .authenticated();
