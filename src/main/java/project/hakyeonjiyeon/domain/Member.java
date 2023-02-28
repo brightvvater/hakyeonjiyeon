@@ -1,8 +1,6 @@
 package project.hakyeonjiyeon.domain;
 
-import com.sun.istack.NotNull;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,7 +8,6 @@ import project.hakyeonjiyeon.dto.MemberCreateDto;
 import project.hakyeonjiyeon.dto.MemberUpdateDto;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Getter
@@ -37,7 +34,7 @@ public class Member {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    private Grade grade;
+    private Role role;
 
     private void setId(Long id) {
         this.id = id;
@@ -71,8 +68,8 @@ public class Member {
         this.email = email;
     }
 
-    private void setGrade(Grade grade) {
-        this.grade = grade;
+    private void setRole(Role role) {
+        this.role = role;
     }
 
     public static Member createMember(MemberCreateDto memberCreateDto, PasswordEncoder passwordEncoder) {
@@ -82,7 +79,7 @@ public class Member {
         member.setNickName(memberCreateDto.getNickName());
         member.setAddress(memberCreateDto.getAddress());
         member.setPhoneNumber(memberCreateDto.getPhoneNumber());
-        member.setGrade(Grade.MEMBER);
+        member.setRole(Role.ROLE_ADMIN);
         member.setEmail(memberCreateDto.getEmail());
         String password = passwordEncoder.encode(memberCreateDto.getPassword());
         member.setPassword(password);

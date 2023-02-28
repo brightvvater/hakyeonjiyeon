@@ -5,17 +5,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import project.hakyeonjiyeon.domain.Grade;
 import project.hakyeonjiyeon.domain.Member;
 import project.hakyeonjiyeon.dto.MemberCreateDto;
 import project.hakyeonjiyeon.dto.MemberUpdateDto;
 import project.hakyeonjiyeon.exception.DuplicateMemberException;
 import project.hakyeonjiyeon.repository.MemberRepository;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

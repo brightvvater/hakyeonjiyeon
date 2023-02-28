@@ -1,7 +1,7 @@
 package project.hakyeonjiyeon.service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,12 +15,12 @@ import project.hakyeonjiyeon.dto.MemberUpdateDto;
 import project.hakyeonjiyeon.exception.DuplicateMemberException;
 import project.hakyeonjiyeon.repository.MemberRepository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
@@ -32,6 +32,8 @@ public class MemberService implements UserDetailsService {
     public Long join(MemberCreateDto memberCreateDto) {
         Member member = Member.createMember(memberCreateDto, passwordEncoder);
         validationDuplicateMember(member);
+
+        log.info("role={}", member.getRole());
         memberRepository.save(member);
         return  member.getId();
 
@@ -68,7 +70,7 @@ public class MemberService implements UserDetailsService {
         return User.builder()
                 .username(members.get(0).getName())
                 .password(members.get(0).getPassword())
-                .roles(members.get(0).getGrade().toString())
+                .authorities(members.get(0).getRole().toString())
                 .build();
 
     }

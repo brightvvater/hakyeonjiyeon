@@ -9,15 +9,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import project.hakyeonjiyeon.domain.Board;
-import project.hakyeonjiyeon.domain.Grade;
 import project.hakyeonjiyeon.domain.Member;
 import project.hakyeonjiyeon.domain.Post;
 import project.hakyeonjiyeon.dto.MemberCreateDto;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
