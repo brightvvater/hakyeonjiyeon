@@ -1,0 +1,89 @@
+section h2 {
+    font-weight:bold;
+
+}
+
+.button {
+    text-align:center;
+    margin-top: 50px;
+}
+
+button {
+    display :inline-block;
+}
+
+.post-main div {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.post-title {
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+.board-name {
+    color: #FFA500;
+}
+
+.post-content {
+    margin-top: 20px;
+}
+section h3 {
+    font-weight:bold;
+}
+
+.h3 {
+    padding-top:30px;
+    padding-bottom:30px;
+}
+
+section .orderList-main {
+    display: inline-block;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.lessonDetail {
+    margin-bottom: 20px;
+}
+
+.lessonDetail div{
+    padding-top:10px;
+}
+
+.lessonDetail h3 {
+    margin-top: 20px;
+}
+
+.teacherDetail {
+    margin-bottom:80px;
+}
+
+.teacherDetail div{
+    padding-top:10px;
+}
+
+.contentDetail {
+    margin-bottom:80px;
+
+}
+
+.contentDetail div{
+    padding-top:10px;
+
+}
+
+.orderDetail h3{
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.orderDetail div {
+    padding-top:10px;
+}
+
+.left li{
+    font-family:'nanum1';
+}

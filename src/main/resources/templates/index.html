@@ -2,51 +2,22 @@
 <html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
         xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Hello</title>
+    <title>main</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <section>
-    <!--<table class="table-main">
-        <tr th:each="lesson : ${lessons}" >
-            <td th:text="${lesson.title}"></td>
-            <td th:text="${lesson.lessonId}">자신감 있는 말하기를 위해</td>
-        </tr>
-    </table>-->
     <div th:each="category : ${categoryList}" th:object="${category}">
-    <h2 th:text="*{name}">레슨이름</h2>
-        <div th:each="lesson: ${lessons}" th:if="${lesson.categoryName} == *{name}">
-            <span>
+        <h2 th:text="*{name}" class="category-name">레슨이름</h2>
+        <div th:each="lesson: ${lessons}" th:if="${lesson.categoryName} == *{name}" class="lesson-main">
+            <div>
                 <a th:href="@{/lesson/detail/{param1}(param1=${lesson.lessonId})}">
-                <img id="imgId" th:src="${lesson.imageName}" alt="첨부이미지" th:if="${lesson.imageName != null}"  width="300" height="150"/></a>
-            </span>
-            <span th:text="${lesson.title}">레슨제목</span>
-            <span th:text="${lesson.categoryName} + '|'+ ${lesson.teacherName}"> 레슨카테고리+강사이름</span>
+                <img th:src="${lesson.imageName}" alt="첨부이미지" th:if="${lesson.imageName != null}"  width="250" height="200"/></a>
+            </div>
+            <div th:text="${lesson.title}" class="lesson-title">레슨제목</div>
+            <div th:text="${lesson.categoryName} + ' | '+ ${lesson.teacherName}" class="lesson-name"> 레슨카테고리+강사이름</div>
         </div>
     </div>
-
-    <!--
-    <h2></h2>
-    <div class="table-main">
-        <div th:each="lesson : ${lessons}" th:if="${lesson.categoryName eq '카테고리1'}">
-            <span>
-                <a th:href="@{/lesson/detail/{param1}(param1=${lesson.lessonId})}"><img src="/images/136524.png" alt="" width="300" height="150"></a>
-            </span>
-            <span th:text="${lesson.title}">자신감 있는 말하기를 위해</span>
-            <span th:text="${lesson.categoryName} + '|'+ ${lesson.teacherName}">자기개발|최효정 스피치</span>
-        </div>
-    </div>
-
-    <h2>나도 사장님!</h2>
-    <div class="table-main">
-        <div th:each="lesson : ${lessons}" th:if="${lesson.categoryName eq '나도 사장님!'}">
-            <span>
-                <a th:href="@{/lesson/detail/{param1}(param1=${lesson.lessonId})}"><img src="/images/136524.png" alt="" width="300" height="150"></a>
-            </span>
-            <span th:text="${lesson.title}">자신감 있는 말하기를 위해</span>
-            <span th:text="${lesson.categoryName} + '|'+ ${lesson.teacherName}">자기개발|최효정 스피치</span>
-        </div>
-    </div>-->
 
 </section>
 </body>

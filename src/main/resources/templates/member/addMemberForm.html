@@ -40,7 +40,7 @@
             <div class="field-error" th:errors="*{address}">주소 오류</div>
         </div>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-        <button type="submit">등록하기</button>
+        <div class="button"><button type="submit">등록하기</button></div>
     </form>
 
 </section>

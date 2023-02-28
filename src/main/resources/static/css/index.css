@@ -1,15 +1,39 @@
+@font-face {
+        font-family: "nanum1";
+        src: url("../fonts/Nanum2.ttf");
+        font-style:normal;
+        font-weight:normal;
+        }
 
-.container {
-     text-align:center;
+.container-fluid {
+    margin-top:40px;
+    background-color: #FFFAF0;
+    font-family: "nanum1";
+}
+.col-md-2 {
+    margin-left:100px;
 }
 
-footer li {
+.col-md-2 ul {
+    margin-top:100px;
+}
+
+li {
      list-style: none;
 }
 
-.left li {
-     display: inline;
+section {
+    margin-bottom: 100px;
 }
+
+
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+
+.title a {
+    color: #DB7093;
+}
+
 
 .table-main td {
     text-align: center;
@@ -20,3 +44,64 @@ footer li {
             color: #dc3545;
             border-color:#dc3545;
         }
+
+.header-main {
+    margin-top:20px;
+    margin-bottom: 100px;
+    margin-right:100px;
+    text-align :right;
+
+}
+
+.header-main li{
+    display: inline;
+}
+
+.title {
+    margin-top: 20px;
+    margin-bottom : 50px;
+    font-weight: bold;
+
+}
+
+.lesson-main {
+    display: inline-block;
+    margin-top:50px;
+    margin-bottom:50px;
+}
+
+
+.lesson-title, .lesson-name{
+    margin-top: 10px;
+}
+
+.lesson-title {
+    font-size: 25px;
+}
+
+.category-name {
+    font-weight: bold;
+    color: 	#FFA500;
+}
+
+.footer {
+    background-color:#FFFACD;
+}
+
+footer {
+    margin-left: 300px;
+    padding-top:30px;
+    padding-bottom:30px;
+
+}
+
+footer ul {
+    display: inline-block;
+}
+
+footer .right {
+    margin-left: 200px;
+}
+
+
+

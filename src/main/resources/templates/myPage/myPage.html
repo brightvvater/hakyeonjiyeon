@@ -10,25 +10,21 @@
 
 <section>
    <h2 th:text="|안녕하세요! ${myPageForm.memberName}님|">안녕하세요 회원님!!</h2>
-  <!--<table class="table-main">
-        <tr th:each="myPage : ${myPageForm}" >
-            <td th:text="${myPage.title}"></td>
-            <td th:text="${myPage.price}">자신감 있는 말하기를 위해</td>
-            <td th:text="${myPage.teacherName}">자신감 있는 말하기를 위해</td>
-        </tr>
-  </table>-->
+    <div>프로필 수정하기</div>
 
-    <h2>주문 내역</h2>
+    <div class="h3"><h3>주문 내역</h3></div>
     <div class="orderList-main" th:each="myPageForm : ${myPageFormList}">
         <div>
-            <span>
-                <img src="/images/136524.png" alt="" width="300" height="150">
-            </span>
-            <span th:text="${myPageForm.title}">주문강의 이름</span>
-            <span th:text="${myPageForm.teacherName}">주문강의 강사이름</span>
-            <span th:text="${myPageForm.price}+'원'">주문강의 가격</span>
+            <div>
+                <img th:src="${myPageForm.imageName}" alt="첨부이미지" th:if="${myPageForm.imageName != null}"  width="250" height="200"/></a>
+            </div>
+            <div th:text="${myPageForm.title}">주문강의 이름</div>
+            <div th:text="${myPageForm.price}+'원'">주문강의 가격</div>
         </div>
     </div>
+
+    <div class="h3"><h3>포인트 내역</h3></div>
+
 
 </section>
 </body>

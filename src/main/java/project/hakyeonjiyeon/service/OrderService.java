@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.hakyeonjiyeon.domain.Lesson;
-import project.hakyeonjiyeon.domain.Member;
-import project.hakyeonjiyeon.domain.Order;
-import project.hakyeonjiyeon.domain.OrderStatus;
+import project.hakyeonjiyeon.domain.*;
 import project.hakyeonjiyeon.dto.MyPageFormDto;
 import project.hakyeonjiyeon.dto.OrderCreateDto;
 import project.hakyeonjiyeon.dto.OrderFormDto;
@@ -87,6 +84,7 @@ public class OrderService {
             myPageFormDto.setTitle(order.getLesson().getTitle());
             myPageFormDto.setPrice(order.getLesson().getPrice());
             myPageFormDto.setTeacherName(order.getLesson().getTeacher().getName());
+            myPageFormDto.setImageName(order.getLesson().getLessonFiles().get(0).getStoreFileName());
             list.add(myPageFormDto);
         }
 

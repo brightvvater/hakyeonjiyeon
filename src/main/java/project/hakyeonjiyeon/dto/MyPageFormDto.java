@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.hakyeonjiyeon.domain.LessonFile;
 
 @Setter @Getter
 @NoArgsConstructor
@@ -19,6 +20,8 @@ public class MyPageFormDto {
     private int price;
 
     private String teacherName;
+
+    private String imageName;
 
 
 }

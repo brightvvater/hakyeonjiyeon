@@ -40,6 +40,9 @@ public class PostController {
         //게시판 목록??
         List<BoardFormDto> boardList = boardService.getBoardList();
         model.addAttribute("boardList", boardList);
+        for (BoardFormDto boardFormDto : boardList) {
+            log.info("board={}", boardFormDto.getName());
+        }
 
         //게시물 목록
         List<PostFormDto> postList = postService.getListWithMember();
@@ -83,7 +86,7 @@ public class PostController {
         //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
 
 
-        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername());
+        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername()); //추후 변경 요~~~
 
         Long postId = postService.createPost(memberId, postCreateDto);
         return "redirect:/post/main";

@@ -7,17 +7,20 @@
 </head>
 <body>
 <section>
-    <ul>
-        <li><a href="/post/addPost"> 게시글 등록하기</a></li>
-    </ul>
+    <a href="/post/addPost">
+    <button type="submit">게시글 등록하기</button>
+    </a>
+    <!--<div th:each="board: ${boardList}">
+        <div th:text="${board.boardName}"></div>
+    </div>-->
 
-    <div th:each="post: ${postList}">
+    <div th:each="post: ${postList}" class="post-main">
         <div>_____________________________________________________________________________________________________________________________________________________</div>
-        <h3 th:text="${post.boardName}">게시판 이름</h3>
+        <div th:text="${post.boardName}" class="board-name">게시판 이름</div>
         <a th:href="@{/post/detail/{param1}(param1=${post.postId})}">
-            <span th:text="${post.title}">게시물 제목</span>
+            <div th:text="${post.title}" class="post-title">게시물 제목</div>
         </a>
-            <span th:text="${post.nickName}">게시자 닉네임</span>
+            <div th:text="${post.nickName}">게시자 닉네임</div>
         </div>
 </section>
 </body>

@@ -7,37 +7,43 @@
 </head>
 <body>
 <section>
-    <a href=""><img th:src="${lesson.lessonImage}" alt="첨부이미지" th:if="${lesson.lessonImage != null}"  width="300" height="150"/></a><br>
-    <h2 th:text="${lesson.title}">제목</h2>
-    <h3 th:text="${lesson.teacherName}">강사</h3>
-    <div class="form-group">
-        <span>일시</span>
-        <span th:text="${#temporals.format(lesson.startDate, 'yyyy-MM-dd')}+'~'+${#temporals.format(lesson.endDate, 'yyyy-MM-dd')}">일시</span>
-    </div>
-    <div class="form-group">
-        <span>시간</span>
-        <span th:text="${#temporals.format(lesson.startDate, 'HH:mm:ss')}+'~'+${#temporals.format(lesson.endDate, 'HH:mm:ss')}">시간</span>
-    </div>
-    <div class="form-group">
-        <span>가격</span>
-        <span th:text="${lesson.price} +'원'">가격</span>
+    <div class="lessonDetail">
+        <a href=""><img th:src="${lesson.lessonImage}" alt="첨부이미지" th:if="${lesson.lessonImage != null}"  width="700" height="400"/></a><br>
+        <h3 th:text="|강의 제목: ${lesson.title}|">제목</h3>
+        <div th:text="|강사 ${lesson.teacherName}|">강사</div>
+        <div>
+            <span>일시</span>
+            <span th:text="${#temporals.format(lesson.startDate, 'yyyy-MM-dd')}+'~'+${#temporals.format(lesson.endDate, 'yyyy-MM-dd')}">일시</span>
+        </div>
+        <div>
+            <span>시간</span>
+            <span th:text="${#temporals.format(lesson.startDate, 'HH:mm:ss')}+'~'+${#temporals.format(lesson.endDate, 'HH:mm:ss')}">시간</span>
+        </div>
+        <div>
+            <span>가격</span>
+            <span th:text="${lesson.price} +'원'">가격</span>
+        </div>
     </div>
     <p>___________________________________________________________________________________________________________________________________________</p>
 
-    <h2>강사 소개</h2>
-    <div>
-        <a href=""><img th:src="${lesson.teacherImage}" alt="첨부이미지" th:if="${lesson.teacherImage != null}"  width="300" height="150"/></a><br>
-        <span th:text="${lesson.introduction}">소개</span>
+    <div class="teacherDetail">
+        <h3>강사 소개</h3>
+        <div>
+            <a href=""><img th:src="${lesson.teacherImage}" alt="첨부이미지" th:if="${lesson.teacherImage != null}"  width="700" height="400"/></a><br>
+            <pre><div th:text="${lesson.introduction}">소개</div></pre>
+        </div>
     </div>
 
-    <h2>내용</h2>
-    <div>
-        <span th:text="${lesson.content}">내용</span>
+    <div class="contentDetail">
+        <h3>내용</h3>
+        <div>
+            <pre><div th:text="${lesson.content}">내용</div></pre>
+        </div>
     </div>
+
     <form th:action="@{/order}" method="get">
         <input type="hidden" th:field="${lesson.lessonId}">
-        <!--memberId-->
-        <input type="submit" value="구매하기">
+        <div class="button"><input type="submit" value="구매하기"></div>
     </form>
 
 </section>

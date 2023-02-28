@@ -7,11 +7,12 @@
 </head>
 <body>
 <section>
-    <h2 th:text="${post.boardName}">게시판명</h2>
-    <h3 th:text="${post.title}">게시물 제목</h3>
+    <div th:text="${post.nickName}">게시자 닉네임</div>
+    <div th:text="${post.boardName}" class="board-name">게시판명</div>
+    <div th:text="${post.title}" class="post-title">게시물 제목</div>
 
-    <div>
-        <span th:text="${post.content}">내용</span>
+    <div class="post-content">
+        <pre><span th:text="${post.content}">내용</span></pre>
     </div>
 
 </section>
