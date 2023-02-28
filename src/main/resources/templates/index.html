@@ -8,7 +8,7 @@
 <body>
 <section>
     <div th:each="category : ${categoryList}" th:object="${category}">
-        <h2 th:text="*{name}" class="category-name">레슨이름</h2>
+        <h2 th:text="*{name}" class="category-name">카테고리이름</h2>
         <div th:each="lesson: ${lessons}" th:if="${lesson.categoryName} == *{name}" class="lesson-main">
             <div>
                 <a th:href="@{/lesson/detail/{param1}(param1=${lesson.lessonId})}">
