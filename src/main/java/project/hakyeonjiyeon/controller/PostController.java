@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import project.hakyeonjiyeon.dto.BoardFormDto;
 import project.hakyeonjiyeon.dto.PostCreateDto;
 import project.hakyeonjiyeon.dto.PostFormDto;
-import project.hakyeonjiyeon.dto.SessionUser;
+import project.hakyeonjiyeon.security.CustomUser;
+import project.hakyeonjiyeon.security.SessionUser;
 import project.hakyeonjiyeon.repository.MemberRepository;
 import project.hakyeonjiyeon.service.BoardService;
-import project.hakyeonjiyeon.service.MemberService;
 import project.hakyeonjiyeon.service.PostService;
 
 import javax.servlet.http.HttpSession;
@@ -92,10 +91,10 @@ public class PostController {
         if (member != null) {
             memberId = memberRepository.findByEmail(member.getEmail()).get().getId();
         }else if (authentication != null) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            //log.info("userDetails={}", userDetails);
+            CustomUser userDetails = (CustomUser) authentication.getPrincipal();
+            //log.info("userDetails={}", userDetails.getAuthId());
             //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
-            memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId();
+            memberId = memberRepository.findByAuthId(userDetails.getAuthId()).getId();
         }
 
 

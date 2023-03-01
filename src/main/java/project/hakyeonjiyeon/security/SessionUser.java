@@ -1,4 +1,4 @@
-package project.hakyeonjiyeon.dto;
+package project.hakyeonjiyeon.security;
 
 import lombok.Getter;
 import project.hakyeonjiyeon.domain.Member;

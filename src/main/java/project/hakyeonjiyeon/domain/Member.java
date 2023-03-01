@@ -96,7 +96,7 @@ public class Member {
         member.setNickName(memberCreateDto.getNickName());
         member.setAddress(memberCreateDto.getAddress());
         member.setPhoneNumber(memberCreateDto.getPhoneNumber());
-        member.setRole(Role.ROLE_ADMIN);
+        member.setRole(Role.ROLE_MEMBER);
         member.setEmail(memberCreateDto.getEmail());
         String password = passwordEncoder.encode(memberCreateDto.getPassword());
         member.setPassword(password);

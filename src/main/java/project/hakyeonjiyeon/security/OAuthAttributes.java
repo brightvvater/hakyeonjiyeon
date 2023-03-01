@@ -1,4 +1,4 @@
-package project.hakyeonjiyeon.dto;
+package project.hakyeonjiyeon.security;
 
 import lombok.Builder;
 import lombok.Getter;
