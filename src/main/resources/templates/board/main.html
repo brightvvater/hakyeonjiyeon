@@ -20,7 +20,9 @@
         <a th:href="@{/post/detail/{param1}(param1=${post.postId})}">
             <div th:text="${post.title}" class="post-title">게시물 제목</div>
         </a>
-            <div th:text="${post.nickName}">게시자 닉네임</div>
+            <div th:if="${post.nickName ==null}" th:text="${post.name}">게시자 이름</div>
+            <div th:if="${post.nickName !=null}" th:text="${post.nickName}">게시자 닉네임</div>
+
         </div>
 </section>
 </body>

@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import project.hakyeonjiyeon.dto.BoardFormDto;
 import project.hakyeonjiyeon.dto.PostCreateDto;
 import project.hakyeonjiyeon.dto.PostFormDto;
+import project.hakyeonjiyeon.dto.SessionUser;
 import project.hakyeonjiyeon.repository.MemberRepository;
 import project.hakyeonjiyeon.service.BoardService;
 import project.hakyeonjiyeon.service.MemberService;
 import project.hakyeonjiyeon.service.PostService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public class PostController {
     private final PostService postService;
 
     private final MemberRepository memberRepository;
+
+    private final HttpSession httpSession;
 
     /*
      * 메인페이지
@@ -82,13 +86,18 @@ public class PostController {
             return "board/addPostForm";
         }
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        //log.info("userDetails={}", userDetails);
-        //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
+        //로그인멤버
+        SessionUser member = (SessionUser) httpSession.getAttribute("member");
+        Long memberId = 0L;
+        if (member != null) {
+            memberId = memberRepository.findByEmail(member.getEmail()).get().getId();
+        }else if (authentication != null) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            //log.info("userDetails={}", userDetails);
+            //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
+            memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId();
+        }
 
-
-
-        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId(); //추후 변경 요~~~
 
         Long postId = postService.createPost(memberId, postCreateDto);
         return "redirect:/post/main";

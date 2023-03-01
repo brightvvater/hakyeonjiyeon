@@ -14,11 +14,13 @@ import project.hakyeonjiyeon.domain.PayMethod;
 import project.hakyeonjiyeon.dto.MyPageFormDto;
 import project.hakyeonjiyeon.dto.OrderCreateDto;
 import project.hakyeonjiyeon.dto.OrderFormDto;
+import project.hakyeonjiyeon.dto.SessionUser;
 import project.hakyeonjiyeon.repository.MemberRepository;
 import project.hakyeonjiyeon.service.LessonService;
 import project.hakyeonjiyeon.service.MemberService;
 import project.hakyeonjiyeon.service.OrderService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,17 +36,24 @@ public class OrderController {
 
     private final MemberRepository memberRepository;
 
+    private final HttpSession httpSession;
+
 
     @GetMapping
     public String OrderForm(@RequestParam("lessonId") Long lessonId,
                             Model model, Authentication authentication) {
 
-        //로그인 멤버
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        //log.info("userDetails={}", userDetails);
-        //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
-        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId();
-
+        //로그인멤버
+        SessionUser member = (SessionUser) httpSession.getAttribute("member");
+        Long memberId = 0L;
+        if (member != null) {
+            memberId = memberRepository.findByEmail(member.getEmail()).get().getId();
+        }else if (authentication != null) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            //log.info("userDetails={}", userDetails);
+            //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
+            memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId();
+        }
 
         OrderFormDto orderFormDto = orderService.showMemberAndLesson(lessonId, memberId);
 
@@ -72,10 +81,16 @@ public class OrderController {
     public String getOrderList(Model model, Authentication authentication) {
 
         //로그인멤버
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        //log.info("userDetails={}", userDetails);
-        //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
-        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId();
+        SessionUser member = (SessionUser) httpSession.getAttribute("member");
+        Long memberId = 0L;
+        if (member != null) {
+            memberId = memberRepository.findByEmail(member.getEmail()).get().getId();
+        }else if (authentication != null) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            //log.info("userDetails={}", userDetails);
+            //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
+            memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId();
+        }
 
         List<MyPageFormDto> myPageFormDtos = orderService.selectOrderList(memberId);
         model.addAttribute("myPageFormList", myPageFormDtos);

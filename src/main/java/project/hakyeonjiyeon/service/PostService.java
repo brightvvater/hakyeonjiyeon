@@ -62,6 +62,7 @@ public class PostService {
             postFormDto.setPostId(post.getId());
             postFormDto.setNickName(post.getMember().getNickName());
             postFormDto.setBoardName(post.getBoard().getName());
+            postFormDto.setName(post.getMember().getName());
 
             list.add(postFormDto);
         }

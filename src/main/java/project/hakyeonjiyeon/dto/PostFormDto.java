@@ -22,6 +22,8 @@ public class PostFormDto {
 
     private String nickName;
 
+    private String name;
+
     private String boardName;
 
 }
