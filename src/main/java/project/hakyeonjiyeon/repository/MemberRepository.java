@@ -18,11 +18,11 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
 
     @Query("select m from Member m where m.authId= :authId")
-    List<Member> findByAuthId(@Param("authId") String authId);
+    Member findByAuthId(@Param("authId") String authId);
 
 
-    @Query("select m from Member m where m.name= :name")
-    Optional<Member> findIdByUserName(@Param("name") String userName);
+    /*@Query("select m from Member m where m.name= :name")
+    Optional<Member> findIdByUserName(@Param("name") String userName);*/
 
 
 

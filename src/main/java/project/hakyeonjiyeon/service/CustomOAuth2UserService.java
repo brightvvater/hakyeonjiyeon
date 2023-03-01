@@ -10,8 +10,8 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import project.hakyeonjiyeon.domain.Member;
-import project.hakyeonjiyeon.dto.OAuthAttributes;
-import project.hakyeonjiyeon.dto.SessionUser;
+import project.hakyeonjiyeon.security.OAuthAttributes;
+import project.hakyeonjiyeon.security.SessionUser;
 import project.hakyeonjiyeon.repository.MemberRepository;
 
 import javax.servlet.http.HttpSession;

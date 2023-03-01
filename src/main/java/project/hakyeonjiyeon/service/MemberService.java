@@ -2,6 +2,8 @@ package project.hakyeonjiyeon.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +16,9 @@ import project.hakyeonjiyeon.dto.MemberCreateDto;
 import project.hakyeonjiyeon.dto.MemberUpdateDto;
 import project.hakyeonjiyeon.exception.DuplicateMemberException;
 import project.hakyeonjiyeon.repository.MemberRepository;
+import project.hakyeonjiyeon.security.CustomUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,8 +48,8 @@ public class MemberService implements UserDetailsService {
     ///중복회원검사
     private void validationDuplicateMember(Member member) {
         //EXCEPTION
-        List<Member> findMember = memberRepository.findByAuthId(member.getAuthId());
-        if (!findMember.isEmpty()) {
+        Member findMember = memberRepository.findByAuthId(member.getAuthId());
+        if (findMember !=null) {
             throw new DuplicateMemberException("이미 존재하는 회원입니다");
         }
     }
@@ -63,16 +67,19 @@ public class MemberService implements UserDetailsService {
     //로그인
     @Override
     public UserDetails loadUserByUsername(String authId) throws UsernameNotFoundException {
-        List<Member> members = memberRepository.findByAuthId(authId);
-        if (members.isEmpty()) {
+        Member member = memberRepository.findByAuthId(authId);
+        if (member ==null) {
             throw new UsernameNotFoundException(authId);
         }
 
-        return User.builder()
-                .username(members.get(0).getName())
-                .password(members.get(0).getPassword())
-                .authorities(members.get(0).getRole().toString())
-                .build();
+        List<GrantedAuthority> role = new ArrayList();
+        role.add(new SimpleGrantedAuthority(member.getRole().name()));
+        log.info("email={}",member.getEmail());
+
+        return new CustomUser(member.getName(), member.getPassword(), role, member.getAuthId(), member.getEmail());
 
     }
+
+
+
 }

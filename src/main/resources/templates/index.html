@@ -15,7 +15,7 @@
                 <img th:src="${lesson.imageName}" alt="첨부이미지" th:if="${lesson.imageName != null}"  width="250" height="200"/></a>
             </div>
             <div th:text="${lesson.title}" class="lesson-title">레슨제목</div>
-            <div th:text="${lesson.categoryName} + ' | '+ ${lesson.teacherName}" class="lesson-name"> 레슨카테고리+강사이름</div>
+            <div th:text="${lesson.teacherName}" class="lesson-name"> 강사이름</div>
         </div>
     </div>
 

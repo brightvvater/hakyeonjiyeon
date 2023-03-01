@@ -8,23 +8,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import project.hakyeonjiyeon.domain.Lesson;
-import project.hakyeonjiyeon.domain.Member;
 import project.hakyeonjiyeon.domain.PayMethod;
 import project.hakyeonjiyeon.dto.MyPageFormDto;
 import project.hakyeonjiyeon.dto.OrderCreateDto;
 import project.hakyeonjiyeon.dto.OrderFormDto;
-import project.hakyeonjiyeon.dto.SessionUser;
+import project.hakyeonjiyeon.security.CustomUser;
+import project.hakyeonjiyeon.security.SessionUser;
 import project.hakyeonjiyeon.repository.MemberRepository;
-import project.hakyeonjiyeon.service.LessonService;
-import project.hakyeonjiyeon.service.MemberService;
 import project.hakyeonjiyeon.service.OrderService;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,10 +45,10 @@ public class OrderController {
         if (member != null) {
             memberId = memberRepository.findByEmail(member.getEmail()).get().getId();
         }else if (authentication != null) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            //log.info("userDetails={}", userDetails);
+            CustomUser userDetails = (CustomUser) authentication.getPrincipal();
+            //log.info("userDetails={}", userDetails.getAuthId());
             //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
-            memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId();
+            memberId = memberRepository.findByAuthId(userDetails.getAuthId()).getId();
         }
 
         OrderFormDto orderFormDto = orderService.showMemberAndLesson(lessonId, memberId);
@@ -86,10 +82,10 @@ public class OrderController {
         if (member != null) {
             memberId = memberRepository.findByEmail(member.getEmail()).get().getId();
         }else if (authentication != null) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            //log.info("userDetails={}", userDetails);
+            CustomUser userDetails = (CustomUser) authentication.getPrincipal();
+            //log.info("userDetails={}", userDetails.getAuthId());
             //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
-            memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId();
+            memberId = memberRepository.findByAuthId(userDetails.getAuthId()).getId();
         }
 
         List<MyPageFormDto> myPageFormDtos = orderService.selectOrderList(memberId);

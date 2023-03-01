@@ -32,5 +32,4 @@ public class MemberCreateDto {
     @Email(message = "형식에 맞추어 입력해 주세요.")
     private String email;
 
-    private String role;
 }
