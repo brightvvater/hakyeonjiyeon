@@ -1,5 +1,6 @@
 package project.hakyeonjiyeon.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,14 +13,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import project.hakyeonjiyeon.domain.Role;
+import project.hakyeonjiyeon.service.CustomOAuth2UserService;
 import project.hakyeonjiyeon.service.MemberService;
 
-@Configuration
+
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    MemberService memberService;
+    private final MemberService memberService;
+
+    private final CustomOAuth2UserService customOAuth2UserService;
+
+
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -32,11 +39,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .and()
+                .oauth2Login()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService);
 
         http.authorizeRequests()
-                .mvcMatchers("/","/member/**","/post/main").permitAll()
-                .mvcMatchers("/addTeacher","/addCategory","/addLesson","/addBoard").hasAnyAuthority("ROLE_ADMIN")
+                .mvcMatchers("/","/member/**","/post/main","/lesson/detail/**").permitAll()
+                .mvcMatchers("/addTeacher","/addCategory","/addLesson","/addBoard").hasAuthority(Role.ROLE_ADMIN.name())
                 .anyRequest()
                 .authenticated();
 
@@ -51,11 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(memberService)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder);
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 }

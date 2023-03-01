@@ -1,6 +1,7 @@
 package project.hakyeonjiyeon.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +33,8 @@ public class Member {
     private String address;
 
     private String email;
+
+    private String picture;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -72,6 +75,20 @@ public class Member {
         this.role = role;
     }
 
+    public String getRoleKey() {
+        return this.role.getKey();
+    }
+
+    @Builder
+    public Member(String name, String email, String picture, Role role) {
+        this.name = name;
+        this.email = email;
+        this.picture = picture;
+        this.role = role;
+    }
+
+
+
     public static Member createMember(MemberCreateDto memberCreateDto, PasswordEncoder passwordEncoder) {
         Member member = new Member();
         member.setAuthId(memberCreateDto.getAuthId());
@@ -85,6 +102,13 @@ public class Member {
         member.setPassword(password);
 
         return member;
+    }
+
+    public Member update(String name, String picture) {
+        this.name= name;
+        this.picture =picture;
+
+        return  this;
     }
 
     public Long updateMember(MemberUpdateDto memberUpdateDto) {

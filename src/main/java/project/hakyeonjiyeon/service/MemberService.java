@@ -33,7 +33,8 @@ public class MemberService implements UserDetailsService {
         Member member = Member.createMember(memberCreateDto, passwordEncoder);
         validationDuplicateMember(member);
 
-        log.info("role={}", member.getRole());
+        //log.info("role={}", member.getRole());
+        //log.info("roleName={}", member.getRole().name());
         memberRepository.save(member);
         return  member.getId();
 

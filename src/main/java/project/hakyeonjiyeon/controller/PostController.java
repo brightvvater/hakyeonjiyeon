@@ -88,7 +88,7 @@ public class PostController {
 
 
 
-        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername()); //추후 변경 요~~~
+        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId(); //추후 변경 요~~~
 
         Long postId = postService.createPost(memberId, postCreateDto);
         return "redirect:/post/main";

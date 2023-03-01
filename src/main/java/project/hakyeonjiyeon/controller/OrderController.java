@@ -43,7 +43,7 @@ public class OrderController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         //log.info("userDetails={}", userDetails);
         //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
-        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername());
+        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId();
 
 
         OrderFormDto orderFormDto = orderService.showMemberAndLesson(lessonId, memberId);
@@ -75,7 +75,7 @@ public class OrderController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         //log.info("userDetails={}", userDetails);
         //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
-        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername());
+        Long memberId = memberRepository.findIdByUserName(userDetails.getUsername()).get().getId();
 
         List<MyPageFormDto> myPageFormDtos = orderService.selectOrderList(memberId);
         model.addAttribute("myPageFormList", myPageFormDtos);
