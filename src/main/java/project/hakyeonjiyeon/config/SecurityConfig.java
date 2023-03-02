@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userService(customOAuth2UserService);
 
         http.authorizeRequests()
-                .mvcMatchers("/","/member/**","/post/main","/lesson/detail/**").permitAll()
+                .mvcMatchers("/","/member/**","/post/main","/lesson/detail/**","/post/detail/**").permitAll()
                 .mvcMatchers("/addTeacher","/addCategory","/addLesson","/addBoard").hasAuthority(Role.ROLE_ADMIN.name())
                 .anyRequest()
                 .authenticated();

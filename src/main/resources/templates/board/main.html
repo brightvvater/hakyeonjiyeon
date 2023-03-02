@@ -15,7 +15,7 @@
     </div>-->
 
     <div th:each="post: ${postList}" class="post-main">
-        <div>_____________________________________________________________________________________________________________________________________________________</div>
+        <p>____________________________________________________________________________________________</p>
         <div th:text="${post.boardName}" class="board-name">게시판 이름</div>
         <a th:href="@{/post/detail/{param1}(param1=${post.postId})}">
             <div th:text="${post.title}" class="post-title">게시물 제목</div>
