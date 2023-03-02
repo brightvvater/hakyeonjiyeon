@@ -48,7 +48,7 @@ public class OrderController {
             CustomUser userDetails = (CustomUser) authentication.getPrincipal();
             //log.info("userDetails={}", userDetails.getAuthId());
             //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
-            memberId = memberRepository.findByAuthId(userDetails.getAuthId()).getId();
+            memberId = memberRepository.findByAuthId(userDetails.getAuthId()).get().getId();
         }
 
         OrderFormDto orderFormDto = orderService.showMemberAndLesson(lessonId, memberId);
@@ -85,7 +85,7 @@ public class OrderController {
             CustomUser userDetails = (CustomUser) authentication.getPrincipal();
             //log.info("userDetails={}", userDetails.getAuthId());
             //log.info("id={}", memberRepository.findIdByUserName(userDetails.getUsername()));
-            memberId = memberRepository.findByAuthId(userDetails.getAuthId()).getId();
+            memberId = memberRepository.findByAuthId(userDetails.getAuthId()).get().getId();
         }
 
         List<MyPageFormDto> myPageFormDtos = orderService.selectOrderList(memberId);

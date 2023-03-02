@@ -88,3 +88,15 @@ section .orderList-main {
 .left li{
     font-family:'nanum1';
 }
+.input-sm {
+    size:10;
+}
+
+section .validation {
+    margin-top:170px;
+}
+
+.social {
+    margin-top:15px;
+    margin-bottom:15px;
+}

@@ -48,7 +48,7 @@ public class MemberService implements UserDetailsService {
     ///중복회원검사
     private void validationDuplicateMember(Member member) {
         //EXCEPTION
-        Member findMember = memberRepository.findByAuthId(member.getAuthId());
+        Member findMember = memberRepository.findByAuthId(member.getAuthId()).get();
         if (findMember !=null) {
             throw new DuplicateMemberException("이미 존재하는 회원입니다");
         }
@@ -67,7 +67,7 @@ public class MemberService implements UserDetailsService {
     //로그인
     @Override
     public UserDetails loadUserByUsername(String authId) throws UsernameNotFoundException {
-        Member member = memberRepository.findByAuthId(authId);
+        Member member = memberRepository.findByAuthId(authId).get();
         if (member ==null) {
             throw new UsernameNotFoundException(authId);
         }

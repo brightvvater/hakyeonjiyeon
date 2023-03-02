@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Getter @Setter
@@ -27,6 +29,8 @@ public class MemberCreateDto {
     private String address;
 
     @NotBlank(message = "비밀번호는 필수입니다.")
+    @Min(value = 8)
+    @Max(value = 16)
     private String password;
 
     @Email(message = "형식에 맞추어 입력해 주세요.")

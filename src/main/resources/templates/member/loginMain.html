@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>main</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<section>
+    <ul>
+        <div class="social"><a href="/oauth2/authorization/google"><img src="/images/google.png" width="300" height="100"></a></div>
+        <div class="social"><a href="/oauth2/authorization/naver"><img src="/images/naver.png" width="300" height="90"></a></div>
+        <div class="social"><a href="/oauth2/authorization/kakao"><img src="/images/kakao.png" width="300" height="90"></a></div>
+        <div><a href="/member/login">일반 로그인</a></div>
+        <div><a href="/member/new"> 회원가입</a></div>
+    </ul>
+
+</section>
+</body>
+</html>
+

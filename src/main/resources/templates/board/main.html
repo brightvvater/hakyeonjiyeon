@@ -7,12 +7,13 @@
 </head>
 <body>
 <section>
+    <div th:each="board: ${boardList}">
+        <a href="/"><div th:text="${board.name}"></div></a>
+    </div><br>
+
     <a href="/post/addPost">
     <button type="submit">게시글 등록하기</button>
     </a>
-    <!--<div th:each="board: ${boardList}">
-        <div th:text="${board.boardName}"></div>
-    </div>-->
 
     <div th:each="post: ${postList}" class="post-main">
         <p>____________________________________________________________________________________________</p>
