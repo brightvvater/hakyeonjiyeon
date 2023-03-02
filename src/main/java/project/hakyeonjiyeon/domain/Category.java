@@ -4,8 +4,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import project.hakyeonjiyeon.dto.CategoryCreateDto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,9 +30,21 @@ public class Category {
         this.name = name;
     }
 
+   @OneToMany(mappedBy = "category")
+   private List<Lesson> lessons = new ArrayList<>();
+
+    public void addLesson(Lesson lesson) {
+        lessons.add(lesson);
+        lesson.setCategory(this);
+    }
+
 
     @Builder
     public Category(String name) {
         this.name = name;
+    }
+
+    public void update(CategoryCreateDto categoryCreateDto) {
+        this.setName(categoryCreateDto.getName());
     }
 }

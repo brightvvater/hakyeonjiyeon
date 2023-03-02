@@ -63,11 +63,13 @@ class MemberServiceTest {
         Long joinMemberId = memberService.join(MemberCreateDto);
 
         MemberUpdateDto memberUpdateDto = new MemberUpdateDto();
+        memberUpdateDto.setAuthId("아이디1");
         memberUpdateDto.setNickName("닉네임1");
         memberUpdateDto.setAddress("강남구");
+        memberUpdateDto.setPassword("123123");
 
         //when
-        Long updateId = memberService.update(joinMemberId, memberUpdateDto);
+        Long updateId = memberService.update(memberUpdateDto);
 
         //then
         Assertions.assertThat(memberRepository.findById(joinMemberId).get().getId()).isEqualTo(updateId);

@@ -2,22 +2,21 @@ package project.hakyeonjiyeon.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.h2.engine.Mode;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import project.hakyeonjiyeon.domain.Member;
-import project.hakyeonjiyeon.dto.LoginFormDto;
 import project.hakyeonjiyeon.dto.MemberCreateDto;
+import project.hakyeonjiyeon.dto.MemberUpdateDto;
 import project.hakyeonjiyeon.exception.DuplicateMemberException;
 import project.hakyeonjiyeon.repository.MemberRepository;
+import project.hakyeonjiyeon.security.CustomUser;
+import project.hakyeonjiyeon.security.SessionUser;
 import project.hakyeonjiyeon.service.MemberService;
 
-import javax.naming.Binding;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -30,6 +29,8 @@ public class MemberController {
     private final MemberService memberService;
 
     private final MemberRepository memberRepository;
+
+    private final HttpSession httpSession;
 
     /*
      * 회원가입폼
@@ -74,7 +75,7 @@ public class MemberController {
         Optional<Member> member = memberRepository.findByAuthId(memberCreateDto.getAuthId());
 
         if (!member.isEmpty()) {
-            model.addAttribute("errorMessage","이미 사용중인 아이디입니다.");
+            model.addAttribute("errorMessage", "이미 사용중인 아이디입니다.");
             return "member/addMemberForm";
         }
 
@@ -94,20 +95,68 @@ public class MemberController {
      * 로그인폼
      */
     @GetMapping("/login")
-    public String loginMember(Model model) {
-        model.addAttribute("loginFormDto", new LoginFormDto());
+    public String loginMember() {
         return "member/memberLoginForm";
     }
 
 
     /*
-     * 로그인 에러
+     * 로그인 에러: 추후 수정요
      */
     @GetMapping("/login/error")
-    public String loginError(@ModelAttribute LoginFormDto loginFormDto, Model model) {
-        log.info("loginForm={}", loginFormDto.getAuthId());
+    public String loginError(Model model) {
 
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
         return "member/memberLoginForm";
+    }
+
+    /*
+     * 회원정보 수정폼
+     */
+    @GetMapping("/detail")
+    public String memberUpdateForm(Model model, Authentication authentication) {
+
+        //로그인멤버
+        SessionUser member = (SessionUser) httpSession.getAttribute("member");
+        Member findMember = null;
+        if (member != null) {
+            findMember = memberRepository.findByEmail(member.getEmail()).get();
+        }else if (authentication != null) {
+            CustomUser userDetails = (CustomUser) authentication.getPrincipal();
+            findMember = memberRepository.findByAuthId(userDetails.getAuthId()).get();
+        }
+
+        MemberUpdateDto memberUpdateDto = new MemberUpdateDto();
+        memberUpdateDto.setName(findMember.getName());
+        memberUpdateDto.setAuthId(findMember.getAuthId());
+        memberUpdateDto.setNickName(findMember.getNickName());
+        memberUpdateDto.setEmail(findMember.getEmail());
+        memberUpdateDto.setPhoneNumber(findMember.getPhoneNumber());
+        memberUpdateDto.setAddress(findMember.getAddress());
+
+        model.addAttribute("memberUpdateDto", memberUpdateDto);
+
+        return "member/memberUpdateForm";
+    }
+
+    /*
+     * 회원정보 수정
+     */
+    @PostMapping("/update")
+    public String memberUpdate(@Valid @ModelAttribute MemberUpdateDto memberUpdateDto, BindingResult bindingResult, Model model) {
+        //validation!!!
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "member/memberUpdateForm";
+        }
+
+        try {
+            memberService.update(memberUpdateDto);
+        } catch (IllegalStateException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "member/memberUpdateForm";
+        }
+
+        return "redirect:/order/orderList";
     }
 }

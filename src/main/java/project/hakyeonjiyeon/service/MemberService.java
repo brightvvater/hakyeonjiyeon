@@ -20,6 +20,7 @@ import project.hakyeonjiyeon.security.CustomUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -48,17 +49,17 @@ public class MemberService implements UserDetailsService {
     ///중복회원검사
     private void validationDuplicateMember(Member member) {
         //EXCEPTION
-        Member findMember = memberRepository.findByAuthId(member.getAuthId()).get();
-        if (findMember !=null) {
+        Optional<Member> findMember = memberRepository.findByAuthId(member.getAuthId());
+        if (!findMember.isEmpty()) {
             throw new DuplicateMemberException("이미 존재하는 회원입니다");
         }
     }
 
     //회원정보수정
     @Transactional
-    public Long update(Long memberId, MemberUpdateDto memberUpdateDto) {
-        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
-        return findMember.updateMember(memberUpdateDto);
+    public Long update(MemberUpdateDto memberUpdateDto) {
+        Member findMember = memberRepository.findByAuthId(memberUpdateDto.getAuthId()).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+        return findMember.updateMember(memberUpdateDto, passwordEncoder);
     }
 
     //회원탈퇴
@@ -67,16 +68,16 @@ public class MemberService implements UserDetailsService {
     //로그인
     @Override
     public UserDetails loadUserByUsername(String authId) throws UsernameNotFoundException {
-        Member member = memberRepository.findByAuthId(authId).get();
-        if (member ==null) {
+        Optional<Member> member = memberRepository.findByAuthId(authId);
+        if (member.isEmpty()) {
             throw new UsernameNotFoundException(authId);
         }
 
         List<GrantedAuthority> role = new ArrayList();
-        role.add(new SimpleGrantedAuthority(member.getRole().name()));
-        log.info("email={}",member.getEmail());
+        role.add(new SimpleGrantedAuthority(member.get().getRole().name()));
+        log.info("email={}",member.get().getEmail());
 
-        return new CustomUser(member.getName(), member.getPassword(), role, member.getAuthId(), member.getEmail());
+        return new CustomUser(member.get().getName(), member.get().getPassword(), role, member.get().getAuthId(), member.get().getEmail());
 
     }
 

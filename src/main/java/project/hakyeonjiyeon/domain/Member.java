@@ -111,11 +111,13 @@ public class Member {
         return  this;
     }
 
-    public Long updateMember(MemberUpdateDto memberUpdateDto) {
+    public Long updateMember(MemberUpdateDto memberUpdateDto, PasswordEncoder passwordEncoder) {
         this.setNickName(memberUpdateDto.getNickName());
         this.setPhoneNumber(memberUpdateDto.getPhoneNumber());
         this.setAddress(memberUpdateDto.getAddress());
-        this.setPassword(memberUpdateDto.getPassword());
+        String password = passwordEncoder.encode(memberUpdateDto.getPassword());
+        this.setPassword(password);
+        this.setEmail(memberUpdateDto.getEmail());
 
         return this.getId();
     }

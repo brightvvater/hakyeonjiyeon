@@ -98,7 +98,7 @@ public class Lesson {
         this.teacher = teacher;
     }
 
-    private void setCategory(Category category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

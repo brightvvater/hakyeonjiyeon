@@ -17,8 +17,11 @@
         <h2 class="title"><a href="/">진주에서<br> 배울 수 있는 것</a></h2>
         <ul>
             <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/addLesson"> 레슨 등록하기</a></li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/lesson"> 레슨 목록</a></li>
             <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/addCategory"> 카테고리 등록하기</a></li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/category"> 카테고리 목록</a></li>
             <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/addTeacher"> 강사 등록하기</a></li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/teacher"> 강사 목록</a></li>
             <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/addBoard"> 게시판 등록하기</a></li>
             <li><a href="/post/main">게시판</a></li>
             <li><a href="/order/orderList">마이페이지/주문내역</a></li>

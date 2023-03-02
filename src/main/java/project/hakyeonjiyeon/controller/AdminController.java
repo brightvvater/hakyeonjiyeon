@@ -2,20 +2,22 @@ package project.hakyeonjiyeon.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import project.hakyeonjiyeon.domain.Category;
 import project.hakyeonjiyeon.dto.*;
+import project.hakyeonjiyeon.repository.CategoryRepository;
 import project.hakyeonjiyeon.service.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -30,6 +32,7 @@ public class AdminController {
     private final LessonService lessonService;
 
     private final BoardService boardService;
+
 
     /*
      * 강사등록폼
@@ -54,6 +57,34 @@ public class AdminController {
         }
 
         Long teacherId = teacherService.addTeacher(teacherCreateDto);
+        return "redirect:/";
+    }
+
+    /*
+     * 강사 목록
+     */
+    @GetMapping("/teacher")
+    public String getTeacherList(Model model) {
+        List<TeacherFormDto> teacherList = teacherService.getTeacherList();
+        model.addAttribute("teacherList", teacherList);
+        return "teacher/teacherList";
+    }
+
+    /*
+     * 강사 디테일
+     */
+    @GetMapping("/teacher/{teacherId}")
+    public String teacherDetail(Model model) {
+
+        return "teacher/detail";
+    }
+
+    /*
+     * 강사수정
+     */
+    @PostMapping("/teacher/{teacherId}")
+    public String teacherUpdate() {
+
         return "redirect:/";
     }
 
@@ -82,6 +113,54 @@ public class AdminController {
 
         Long categoryId = categoryService.addCategory(categoryCreateDto);
         return "redirect:/";
+    }
+
+    /*
+     * 카테고리 목록
+     */
+    @GetMapping("/category")
+    public String getCategoryList(Model model) {
+        List<CategoryFormDto> categoryList = categoryService.getCategoryList();
+        model.addAttribute("categoryList", categoryList);
+        return "category/categoryList";
+    }
+
+    /*
+     * 카테고리 디테일
+     */
+    @GetMapping("/category/{categoryId}")
+    public String categoryDetail(@PathVariable("categoryId")Long categoryId, Model model) {
+
+        CategoryCreateDto categoryCreateDto = categoryService.getCategory(categoryId);
+        model.addAttribute("categoryCreateDto", categoryCreateDto);
+        return "category/detail";
+    }
+
+    /*
+     * 카테고리수정
+     */
+    @PostMapping("/category/{categoryId}")
+    public String categoryUpdate(@PathVariable("categoryId") Long categoryId, @ModelAttribute CategoryCreateDto categoryCreateDto) {
+
+        categoryService.update(categoryCreateDto);
+        return "redirect:/";
+    }
+
+    /*
+     * 카테고리 삭제
+     */
+    @GetMapping("/category/remove/{categoryId}")
+    public String removeCategory(@PathVariable("categoryId") Long categoryId, Model model) {
+        try {
+            categoryService.remove(categoryId);
+        }catch (SQLException e) {
+            model.addAttribute("errorMessage", "하위레슨이 있어 삭제할 수 없습니다.");
+            List<CategoryFormDto> categoryList = categoryService.getCategoryList();
+            model.addAttribute("categoryList", categoryList);
+            return "category/categoryList";
+        }
+
+        return "redirect:/category";
     }
 
 
@@ -131,6 +210,27 @@ public class AdminController {
         Long categoryId = lessonCreateDto.getCategoryId();
 
         Long lessonId = lessonService.createLesson(teacherId, categoryId, lessonCreateDto);
+
+        return "redirect:/";
+    }
+
+    /*
+     * 레슨 목록
+     */
+    @GetMapping("/lesson")
+    public String getLessonList(Model model) {
+        List<LessonMainDto> lessonList = lessonService.findLessonWithTeacherAndCategory();
+        model.addAttribute("lessonList", lessonList);
+        return "lesson/lessonList";
+    }
+
+    //레슨 수정폼 따로
+
+    /*
+     * 레슨수정
+     */
+    @PostMapping("/lesson/{lessonId}")
+    public String lessonUpdate() {
 
         return "redirect:/";
     }

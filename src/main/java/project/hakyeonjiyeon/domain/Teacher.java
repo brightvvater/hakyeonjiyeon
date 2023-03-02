@@ -24,6 +24,7 @@ public class Teacher {
 
     private String phoneNumber;
 
+    @Lob
     private String introduction;
 
     @OneToMany(mappedBy ="teacher" ,cascade = CascadeType.ALL, orphanRemoval = true)

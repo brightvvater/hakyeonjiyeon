@@ -65,6 +65,7 @@ public class OrderController {
         //validation!!!
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
+            return "order/orderForm";
         }
 
         orderCreateDto.setOrderDate(LocalDateTime.now());

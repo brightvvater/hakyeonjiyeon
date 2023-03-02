@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class CategoryCreateDto {
 
+    private Long categoryId;
     @NotBlank(message = "카테고리 제목은 필수입니다.")
     private String name;
 

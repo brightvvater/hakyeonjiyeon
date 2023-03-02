@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>category</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<section>
+    <table width="600" height="150">
+        <thead>
+        <th>카테고리 아이디</th>
+        <th>카테고리 이름</th>
+        <th></th>
+        </thead>
+        <tbody>
+        <tr th:each="category: ${categoryList}">
+            <td th:text="${category.categoryId}"></td>
+            <td th:text="${category.name}"></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/category/remove/{param1}(param1=${category.categoryId})}"><input type="button" value="삭제"></a></td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:text="${errorMessage}" th:class="field-error"></div>
+
+</section>
+</body>
+</html>
+

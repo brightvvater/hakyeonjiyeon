@@ -48,5 +48,6 @@ public class LessonCreateDto {
     @NotNull(message = "강사를 선택해주세요.")
     private Long teacherId;
 
+    @NotNull(message = "이미지를 최소 1개 이상 등록해주세요.")
     private List<MultipartFile> lessonFiles;
 }
