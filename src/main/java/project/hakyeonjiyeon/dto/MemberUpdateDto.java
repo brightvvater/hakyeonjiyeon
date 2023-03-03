@@ -36,7 +36,7 @@ public class MemberUpdateDto {
     private String email;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
-    @Range(min = 8, max = 16)
+    //@Range(min = 8, max = 16)
     private String password;
 
 }

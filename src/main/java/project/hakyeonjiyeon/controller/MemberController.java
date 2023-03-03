@@ -80,7 +80,7 @@ public class MemberController {
         }
 
         model.addAttribute("clear", "사용 가능한 아이디 입니다.");
-        return "/member/addMemberForm";
+        return "member/addMemberForm";
     }
 
     /*

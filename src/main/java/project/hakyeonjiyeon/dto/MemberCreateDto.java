@@ -30,8 +30,9 @@ public class MemberCreateDto {
     private String address;
 
     @NotBlank(message = "비밀번호는 필수입니다.")
-    @Range(min = 8, max = 16)
+    //@Range(min = 8, max = 16)
     private String password;
+
 
     @Email(message = "형식에 맞추어 입력해 주세요.")
     private String email;

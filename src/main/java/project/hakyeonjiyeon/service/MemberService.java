@@ -34,7 +34,7 @@ public class MemberService implements UserDetailsService {
 
     //회원가입
     @Transactional
-    public Long join(MemberCreateDto memberCreateDto) {
+    public Long join(MemberCreateDto memberCreateDto) throws DuplicateMemberException{
         Member member = Member.createMember(memberCreateDto, passwordEncoder);
         validationDuplicateMember(member);
 
@@ -47,7 +47,7 @@ public class MemberService implements UserDetailsService {
 
 
     ///중복회원검사
-    private void validationDuplicateMember(Member member) {
+    private void validationDuplicateMember(Member member) throws DuplicateMemberException{
         //EXCEPTION
         Optional<Member> findMember = memberRepository.findByAuthId(member.getAuthId());
         if (!findMember.isEmpty()) {
