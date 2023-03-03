@@ -7,7 +7,7 @@
 </head>
 <body>
 <section>
-    <form th:action="@{/teacher/{param1}(param1=${teacherCreateDto.teacherId})}" method="post" th:object="${teacherCreateDto}" class="addTeacher form-group row">
+    <form th:action="@{/admin/teacher/{param1}(param1=${teacherCreateDto.teacherId})}" method="post" th:object="${teacherCreateDto}" class="addTeacher form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-5">
             <h2>강사 수정</h2>

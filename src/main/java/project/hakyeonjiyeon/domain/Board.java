@@ -5,10 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,6 +28,9 @@ public class Board {
     private void setTitle(String name) {
         this.name = name;
     }
+
+    @OneToMany(mappedBy = "board")
+    private List<Post> posts = new ArrayList<>();
 
 
     @Builder

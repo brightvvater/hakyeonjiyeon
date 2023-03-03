@@ -68,15 +68,12 @@ public class Teacher {
 
 
     @Builder
-    public Teacher(String name, String phoneNumber, String introduction, List<TeacherFile> teacherFiles, List<Lesson> lessons) {
+    public Teacher(String name, String phoneNumber, String introduction, List<TeacherFile> teacherFiles) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.introduction = introduction;
         for (TeacherFile teacherFile : teacherFiles) {
             addTeacherFile(teacherFile);
-        }
-        for (Lesson lesson : lessons) {
-            addLesson(lesson);
         }
     }
 

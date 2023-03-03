@@ -17,7 +17,7 @@
         <tr th:each="lesson: ${lessonList}">
             <td th:text="${lesson.lessonId}"></td>
             <td th:text="${lesson.title}"></td>
-            <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/lesson/remove/{param1}(param1=${lesson.lessonId})}"><input type="button" value="삭제"></a></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/lesson/remove/{param1}(param1=${lesson.lessonId})}"><input type="button" value="삭제"></a></td>
         </tr>
         </tbody>
     </table>

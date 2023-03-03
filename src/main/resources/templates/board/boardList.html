@@ -10,15 +10,15 @@
 <section>
     <table width="600" height="150">
         <thead>
-        <th>카테고리 아이디</th>
-        <th>카테고리 이름</th>
+        <th>게시판 아이디</th>
+        <th>게시판 이름</th>
         <th></th>
         </thead>
         <tbody>
-        <tr th:each="category: ${categoryList}">
-            <td th:text="${category.categoryId}"></td>
-            <td th:text="${category.name}"></td>
-            <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/category/remove/{param1}(param1=${category.categoryId})}"><input type="button" value="삭제"></a></td>
+        <tr th:each="board: ${boardList}">
+            <td th:text="${board.boardId}"></td>
+            <td th:text="${board.name}"></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/board/remove/{param1}(param1=${board.boardId})}"><input type="button" value="삭제"></a></td>
         </tr>
         </tbody>
     </table>

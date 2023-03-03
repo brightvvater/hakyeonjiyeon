@@ -5,10 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.hakyeonjiyeon.domain.Board;
+import project.hakyeonjiyeon.domain.Category;
 import project.hakyeonjiyeon.dto.BoardCreateDto;
 import project.hakyeonjiyeon.dto.BoardFormDto;
 import project.hakyeonjiyeon.repository.BoardRepository;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,5 +47,19 @@ public class BoardService {
             list.add(boardFormDto);
         }
         return list;
+    }
+
+    //게시판 삭제
+    @Transactional
+    public void remove(Long boardId) throws SQLException {
+
+        Board board = boardRepository.findById(boardId);
+        /*for (Category category : categories) {
+            log.info("category={}", category.getLessons());
+        }*/
+        if(!board.getPosts().isEmpty()){
+            throw new SQLException();
+        }
+        boardRepository.delete(board);
     }
 }

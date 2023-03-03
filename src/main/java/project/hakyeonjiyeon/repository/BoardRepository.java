@@ -31,6 +31,10 @@ public class BoardRepository {
         ).getResultList();
     }
 
+    public void delete(Board board) {
+        em.remove(board);
+    }
+
 
 
 }

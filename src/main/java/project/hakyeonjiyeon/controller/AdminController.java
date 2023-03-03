@@ -26,6 +26,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/admin")
 public class AdminController {
 
     private final TeacherService teacherService;
@@ -40,7 +41,7 @@ public class AdminController {
     /*
      * 강사등록폼
      */
-    @GetMapping("addTeacher")
+    @GetMapping("/addTeacher")
     public String addTeacherForm(Model model) {
         TeacherCreateDto teacherCreateDto = new TeacherCreateDto();
         model.addAttribute("teacherCreateDto", teacherCreateDto);
@@ -51,7 +52,7 @@ public class AdminController {
     /*
      * 강사등록
      */
-    @PostMapping("addTeacher")
+    @PostMapping("/addTeacher")
     public String addTeacher(@Valid @ModelAttribute TeacherCreateDto teacherCreateDto, BindingResult bindingResult, Model model) throws IOException {
 
         //log.info("multipartFile={}", teacherCreateDto.getTeacherFiles().get(0).getOriginalFilename());
@@ -120,14 +121,14 @@ public class AdminController {
             return "teacher/teacherList";
         }
 
-        return "redirect:/teacher";
+        return "redirect:/admin/teacher";
     }
 
 
     /*
      * 카테고리등록폼
      */
-    @GetMapping("addCategory")
+    @GetMapping("/addCategory")
     public String addCategoryForm(Model model) {
         CategoryCreateDto categoryCreateDto = new CategoryCreateDto();
         model.addAttribute("categoryCreateDto", categoryCreateDto);
@@ -138,7 +139,7 @@ public class AdminController {
     /*
      * 카테고리등록
      */
-    @PostMapping("addCategory")
+    @PostMapping("/addCategory")
     public String addCategory(@Valid @ModelAttribute CategoryCreateDto categoryCreateDto, BindingResult bindingResult) {
         //validation!!
         if (bindingResult.hasErrors()) {
@@ -195,14 +196,14 @@ public class AdminController {
             return "category/categoryList";
         }
 
-        return "redirect:/category";
+        return "redirect:/admin/category";
     }
 
 
     /*
      * 레슨등록폼
      */
-    @GetMapping("addLesson")
+    @GetMapping("/addLesson")
     public String addLessonForm(Model model) {
         LessonCreateDto lessonCreateDto = new LessonCreateDto();
 
@@ -225,7 +226,7 @@ public class AdminController {
     /*
      * 레슨등록
      */
-    @PostMapping("addLesson")
+    @PostMapping("/addLesson")
     public String addLesson(@Valid @ModelAttribute LessonCreateDto lessonCreateDto, BindingResult bindingResult, Model model) throws IOException {
         //validation!!
         if (bindingResult.hasErrors()) {
@@ -294,16 +295,16 @@ public class AdminController {
      * 레슨 삭제
      */
     @GetMapping("/lesson/remove/{lessonId}")
-    public String removeLesson(@PathVariable("lessonId") Long lessonId, Model model) {
+    public String removeLesson(@PathVariable("lessonId") Long lessonId) {
 
         lessonService.remove(lessonId);
-        return "redirect:/category";
+        return "redirect:/admin/lesson";
     }
 
     /*
     * 게시판 등록폼
     */
-    @GetMapping("addBoard")
+    @GetMapping("/addBoard")
     public String addBoardForm(Model model) {
         BoardCreateDto boardCreateDto = new BoardCreateDto();
         model.addAttribute("boardCreateDto", boardCreateDto);
@@ -314,7 +315,7 @@ public class AdminController {
     /*
      * 게시판 등록
      */
-    @PostMapping("addBoard")
+    @PostMapping("/addBoard")
     public String addBoard(@Valid @ModelAttribute BoardCreateDto boardCreateDto, BindingResult bindingResult) {
         //validation!!
         if (bindingResult.hasErrors()) {
@@ -325,5 +326,33 @@ public class AdminController {
         Long boardId = boardService.createBoard(boardCreateDto);
         return "redirect:/";
     }
+
+    /*
+     * 게시판 목록
+     */
+    @GetMapping("/board")
+    public String getBoardList(Model model) {
+        List<BoardFormDto> boardList = boardService.getBoardList();
+        model.addAttribute("boardList", boardList);
+        return "board/boardList";
+    }
+
+    /*
+     * 게시판 삭제
+     */
+    @GetMapping("/board/remove/{boardId}")
+    public String removeBoard(@PathVariable("boardId") Long boardId, Model model) {
+        try {
+            boardService.remove(boardId);
+        }catch (SQLException e) {
+            model.addAttribute("errorMessage", "하위 게시물이 있어 삭제할 수 없습니다.");
+            List<BoardFormDto> boardList = boardService.getBoardList();
+            model.addAttribute("boardList", boardList);
+            return "board/boardList";
+        }
+
+        return "redirect:/admin/board";
+    }
+
 
 }

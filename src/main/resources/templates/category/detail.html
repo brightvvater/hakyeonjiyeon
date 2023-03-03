@@ -7,7 +7,7 @@
 </head>
 <body>
 <section>
-    <form th:action="@{/category/{param1}(param1=${categoryCreateDto.categoryId})}" method="post" th:object="${categoryCreateDto}" class="addCategory form-group row">
+    <form th:action="@{/admin/category/{param1}(param1=${categoryCreateDto.categoryId})}" method="post" th:object="${categoryCreateDto}" class="addCategory form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-5">
             <h2>카테고리 수정</h2>
