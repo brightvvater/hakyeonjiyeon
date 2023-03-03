@@ -20,6 +20,7 @@ import project.hakyeonjiyeon.repository.TeacherRepository;
 
 import javax.persistence.EntityManager;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -149,8 +150,8 @@ class OrderServiceTest {
         LessonCreateDto lessonCreateDto = new LessonCreateDto();
         List<MultipartFile> list = new ArrayList<>();
         lessonCreateDto.setTitle("레슨1");
-        lessonCreateDto.setStartDate(LocalDateTime.now());
-        lessonCreateDto.setEndDate(LocalDateTime.now());
+        lessonCreateDto.setStartDate(LocalDate.now());
+        lessonCreateDto.setEndDate(LocalDate.now());
         lessonCreateDto.setPrice(10000);
         lessonCreateDto.setContent("레슨내용1");
         lessonCreateDto.setLessonFiles(list);
