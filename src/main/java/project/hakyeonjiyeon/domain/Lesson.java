@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import project.hakyeonjiyeon.dto.LessonUpdateDto;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,9 @@ public class Lesson {
 
     private String title;
 
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     private int price;
 
@@ -54,7 +55,7 @@ public class Lesson {
 
 
     @Builder //null point exception 안나게 lessonfile null 값 허용...?
-    public Lesson(String title, LocalDateTime startDate, LocalDateTime endDate, int price, String content, Teacher teacher, Category category, List<LessonFile> lessonFiles) {
+    public Lesson(String title, LocalDate startDate, LocalDate endDate, int price, String content, Teacher teacher, Category category, List<LessonFile> lessonFiles) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -78,11 +79,11 @@ public class Lesson {
         this.title = title;
     }
 
-    private void setStartDate(LocalDateTime startDate) {
+    private void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    private void setEndDate(LocalDateTime endDate) {
+    private void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

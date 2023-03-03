@@ -9,6 +9,7 @@ import javax.persistence.Lob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -19,9 +20,9 @@ public class LessonDetailDto {
 
     private String title;
 
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     private int price;
 
@@ -34,9 +35,10 @@ public class LessonDetailDto {
 
     private String introduction;
 
-    private String teacherImage;
+    private List<String> teacherImages;
 
-    private String lessonImage;
+    private List<String> lessonImages;
+
 
 
 }

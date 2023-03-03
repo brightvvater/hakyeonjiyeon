@@ -100,3 +100,14 @@ section .validation {
     margin-top:15px;
     margin-bottom:15px;
 }
+
+.board-list a {
+    font-size:30px;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+.image div {
+    margin-top:10px;
+    margin-bottom:10px;
+}

@@ -37,6 +37,8 @@ public class AdminController {
 
     private final BoardService boardService;
 
+    private final PostService postService;
+
 
     /*
      * 강사등록폼
@@ -352,6 +354,17 @@ public class AdminController {
         }
 
         return "redirect:/admin/board";
+    }
+
+    /*
+     * 게시글 삭제
+     */
+    @GetMapping("/post/remove/{postId}")
+    public String removePost(@PathVariable("postId") Long postId) {
+        Long boardId = postService.remove(postId);
+
+        return "redirect:/post/list/" + boardId;
+
     }
 
 

@@ -30,6 +30,17 @@ public class PostRepository {
         ).getResultList();
     }
 
+    public List<Post> findAllWithBoard(Long boardId) {
+        return em.createQuery(
+                "select p from Post p"
+                        + " join fetch p.member"
+                        + " join fetch p.board"
+                        +" where p.board.id=:id"
+                ).setParameter("id", boardId)
+                .getResultList();
+    }
+
+
     public Post findByIdWithMember(Long postId) {
         return (Post) em.createQuery(
                 "select p from Post p"
@@ -38,5 +49,9 @@ public class PostRepository {
                 +" where p.id=:id"
         ).setParameter("id",postId)
                 .getSingleResult();
+    }
+
+    public void delete(Post post) {
+        em.remove(post);
     }
 }

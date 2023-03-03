@@ -26,9 +26,12 @@
                 강사 소개: <textarea th:field="*{introduction}" th:errorclass="field-error" class="form-control"></textarea> <br>
                 <div class="field-error" th:errors="*{introduction}">강사소개 오류</div>
             </div>
-            <div>
+            <div class="image">
                 <div>이미지1: <input type="file" th:field="*{teacherFiles}" multiple="multiple"></div>
                 <div>이미지2: <input type="file" th:field="*{teacherFiles}" multiple="multiple"></div>
+                <div>이미지3: <input type="file" th:field="*{teacherFiles}" multiple="multiple"></div>
+                <div>이미지4: <input type="file" th:field="*{teacherFiles}" multiple="multiple"></div>
+                <div>이미지5: <input type="file" th:field="*{teacherFiles}" multiple="multiple"></div>
                 <div class="field-error" th:text="${errorMessage}">파일 오류</div>
             </div>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">

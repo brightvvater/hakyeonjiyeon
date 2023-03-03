@@ -126,12 +126,18 @@ public class LessonService {
         lessonDetailDto.setTeacherName(lessonDetail.getTeacher().getName());
         lessonDetailDto.setContent(lessonDetail.getContent());
         lessonDetailDto.setIntroduction(lessonDetail.getTeacher().getIntroduction());
+
+        List<String> lessonImages = new ArrayList<>();
         for (LessonFile lessonFile : lessonDetail.getLessonFiles()) {
-            lessonDetailDto.setLessonImage(lessonFile.getStoreFileName());
+            lessonImages.add(lessonFile.getStoreFileName());
         }
+        lessonDetailDto.setLessonImages(lessonImages);
+
+        List<String> teacherImages = new ArrayList<>();
         for (TeacherFile teacherFile: lessonDetail.getTeacher().getTeacherFiles()) {
-            lessonDetailDto.setTeacherImage(teacherFile.getStoreFileName());
+            teacherImages.add(teacherFile.getStoreFileName());
         }
+        lessonDetailDto.setTeacherImages(teacherImages);
 
         return lessonDetailDto;
     }

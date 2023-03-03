@@ -44,12 +44,27 @@ public class PostController {
         //게시판 목록??
         List<BoardFormDto> boardList = boardService.getBoardList();
         model.addAttribute("boardList", boardList);
-        for (BoardFormDto boardFormDto : boardList) {
+        /*for (BoardFormDto boardFormDto : boardList) {
             log.info("board={}", boardFormDto.getName());
-        }
+        }*/
 
         //게시물 목록
         List<PostFormDto> postList = postService.getListWithMember();
+        model.addAttribute("postList", postList);
+
+        return "board/main";
+    }
+
+    /*
+    * 특정 게시판 목록*/
+    @GetMapping("/list/{boardId}")
+    public String boardList(@PathVariable("boardId") Long boardId, Model model) {
+
+        List<BoardFormDto> boardList = boardService.getBoardList();
+        model.addAttribute("boardList", boardList);
+
+
+        List<PostFormDto> postList = postService.getListWithBoard(boardId);
         model.addAttribute("postList", postList);
 
         return "board/main";

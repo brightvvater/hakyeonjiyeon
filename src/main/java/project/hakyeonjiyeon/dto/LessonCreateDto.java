@@ -11,6 +11,7 @@ import project.hakyeonjiyeon.domain.Teacher;
 
 import javax.persistence.Lob;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,14 +23,14 @@ public class LessonCreateDto {
     @NotBlank(message = "제목은 필수입니다.")
     private String title;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "시작일을 입력해주세요.")
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "종료일을 입력해주세요.")
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @NotNull(message = "가격을 입력해주세요.")
     @Min(value = 10000, message = "최소 10000원 이상 입력해주세요.")

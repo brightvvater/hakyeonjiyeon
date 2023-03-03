@@ -1,19 +1,21 @@
 <!DOCTYPE HTML>
 <html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>boardMain</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <section>
-    <div th:each="board: ${boardList}">
-        <a href="/"><div th:text="${board.name}"></div></a>
-    </div><br>
-
     <a href="/post/addPost">
     <button type="submit">게시글 등록하기</button>
     </a>
+    <div class="board-list">
+    <span th:each="board: ${boardList}">
+        <a th:href="@{/post/list/{param1}(param1=${board.boardId})}"><span th:text="${board.name}"></span></a>
+    </span><br>
+    </div>
 
     <div th:each="post: ${postList}" class="post-main">
         <p>____________________________________________________________________________________________</p>
@@ -23,6 +25,7 @@
         </a>
             <div th:if="${post.nickName ==null}" th:text="${post.name}">게시자 이름</div>
             <div th:if="${post.nickName !=null}" th:text="${post.nickName}">게시자 닉네임</div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/post/remove/{param1}(param1=${post.postId})}"><input type="button" value="삭제"></a></div>
 
         </div>
 </section>

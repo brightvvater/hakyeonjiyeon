@@ -1,9 +1,11 @@
 package project.hakyeonjiyeon.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.hakyeonjiyeon.domain.Board;
+import project.hakyeonjiyeon.domain.Lesson;
 import project.hakyeonjiyeon.domain.Member;
 import project.hakyeonjiyeon.domain.Post;
 import project.hakyeonjiyeon.dto.PostCreateDto;
@@ -19,6 +21,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
 
     private final MemberRepository memberRepository;
@@ -70,6 +73,27 @@ public class PostService {
         return list;
     }
 
+    //게시판별 게시물 전체 조회
+    public List<PostFormDto> getListWithBoard(Long boardId) {
+        List<Post> posts = postRepository.findAllWithBoard(boardId);
+
+        List<PostFormDto> list = new ArrayList<>();
+        for (Post post : posts) {
+            PostFormDto postFormDto = new PostFormDto();
+            postFormDto.setTitle(post.getTitle());
+            postFormDto.setContent(post.getContent());
+            postFormDto.setPostDate(post.getPostDate());
+            postFormDto.setPostId(post.getId());
+            postFormDto.setNickName(post.getMember().getNickName());
+            postFormDto.setBoardName(post.getBoard().getName());
+            postFormDto.setName(post.getMember().getName());
+
+            list.add(postFormDto);
+        }
+
+        return list;
+    }
+
     //특정 게시물 조회
     public PostFormDto getPostWithMember(Long postId) {
 
@@ -83,6 +107,16 @@ public class PostService {
         postFormDto.setBoardName(post.getBoard().getName());
 
         return postFormDto;
+    }
+
+    //게시물 삭제
+    @Transactional
+    public Long remove(Long postId) {
+
+        Post post = postRepository.findById(postId);
+        postRepository.delete(post);
+
+        return post.getBoard().getId();
     }
 
 }

@@ -8,17 +8,19 @@
 <body>
 <section>
     <div class="lessonDetail">
-        <a href=""><img th:src="${lesson.lessonImage}" alt="첨부이미지" th:if="${lesson.lessonImage != null}"  width="700" height="400"/></a><br>
+        <div th:each="lessonImage : ${lesson.lessonImages}">
+            <a href=""><img th:src="${lessonImage}" alt="첨부이미지" th:if="${lessonImage != null}"  width="700" height="400"/></a><br>
+        </div>
         <h3 th:text="|강의 제목: ${lesson.title}|">제목</h3>
         <div th:text="|강사 ${lesson.teacherName}|">강사</div>
         <div>
             <span>일시</span>
             <span th:text="${#temporals.format(lesson.startDate, 'yyyy-MM-dd')}+'~'+${#temporals.format(lesson.endDate, 'yyyy-MM-dd')}">일시</span>
         </div>
-        <div>
+        <!--<div>
             <span>시간</span>
             <span th:text="${#temporals.format(lesson.startDate, 'HH:mm:ss')}+'~'+${#temporals.format(lesson.endDate, 'HH:mm:ss')}">시간</span>
-        </div>
+        </div>-->
         <div>
             <span>가격</span>
             <span th:text="${lesson.price} +'원'">가격</span>
@@ -29,7 +31,9 @@
     <div class="teacherDetail">
         <h3>강사 소개</h3>
         <div>
-            <a href=""><img th:src="${lesson.teacherImage}" alt="첨부이미지" th:if="${lesson.teacherImage != null}"  width="700" height="400"/></a><br>
+            <div th:each="teacherImage : ${lesson.teacherImages}">
+                <a href=""><img th:src="${teacherImage}" alt="첨부이미지" th:if="${teacherImage != null}"  width="700" height="400"/></a><br>
+            </div>
             <pre><div th:text="${lesson.introduction}">소개</div></pre>
         </div>
     </div>
