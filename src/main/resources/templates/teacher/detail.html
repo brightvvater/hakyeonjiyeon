@@ -2,14 +2,46 @@
 <html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>teacher</title>
+    <title>category</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <section>
-    강사 세부
-
+    <form th:action="@{/teacher/{param1}(param1=${teacherCreateDto.teacherId})}" method="post" th:object="${teacherCreateDto}" class="addTeacher form-group row">
+        <div class="col-md-2"></div>
+        <div class="col-md-5">
+            <h2>강사 수정</h2>
+            <div>
+                이름: <input type="text" th:field="*{name}" placeholder="예)홍길동" th:errorclass="field-error" class="form-control"> <br>
+                <div class="field-error" th:errors="*{name}">이름 오류</div>
+            </div>
+            <div>
+                휴대폰 번호: <input type="text" th:field="*{phoneNumber}" placeholder="'-'없이 입력" th:errorclass="field-error" class="form-control"> <br>
+                <div class="field-error" th:errors="*{phoneNumber}">휴대폰 오류</div>
+            </div>
+            <div>
+                강사 소개: <textarea th:field="*{introduction}" th:errorclass="field-error" class="form-control"></textarea> <br>
+                <div class="field-error" th:errors="*{introduction}">강사소개 오류</div>
+            </div>
+            <div>
+                <div th:each="teacherFile : *{teacherFileList}">
+                        <div><a href=""><img th:src="${teacherFile}" alt="첨부이미지"  width="250" height="200"/></a></div>
+                        <input type="submit" value="삭제" formaction="">
+                </div>
+            </div>
+            <div>
+                <div>이미지1: <input type="file" th:field="*{teacherFiles}" multiple="multiple"></div>
+                <div>이미지2: <input type="file" th:field="*{teacherFiles}" multiple="multiple"></div>
+                <div class="field-error" th:text="${errorMessage}">파일 오류</div>
+            </div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <div class="button"><button type="submit">수정하기</button></div>
+        </div>
+        <div class="col-md-5"></div>
+    </form>
 </section>
 </body>
 </html>
+
+
 

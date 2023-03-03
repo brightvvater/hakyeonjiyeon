@@ -2,6 +2,7 @@ package project.hakyeonjiyeon.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import project.hakyeonjiyeon.domain.Category;
 import project.hakyeonjiyeon.domain.Teacher;
 
 import javax.persistence.EntityManager;
@@ -25,6 +26,11 @@ public class TeacherRepository {
         return em.createQuery(
                 "select t from Teacher t"
         ).getResultList();
+    }
+
+
+    public void delete(Teacher teacher) {
+        em.remove(teacher);
     }
 
 

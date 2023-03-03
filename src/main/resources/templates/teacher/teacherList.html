@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>teacher</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -16,9 +17,11 @@
         <tr th:each="teacher: ${teacherList}">
             <td th:text="${teacher.teacherId}"></td>
             <td th:text="${teacher.name}"></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/teacher/remove/{param1}(param1=${teacher.teacherId})}"><input type="button" value="삭제"></a></td>
         </tr>
         </tbody>
     </table>
+    <div th:text="${errorMessage}" th:class="field-error"></div>
 
 </section>
 </body>

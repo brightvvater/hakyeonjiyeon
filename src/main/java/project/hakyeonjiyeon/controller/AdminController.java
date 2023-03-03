@@ -2,6 +2,7 @@ package project.hakyeonjiyeon.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.h2.engine.Mode;
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.hakyeonjiyeon.domain.Category;
+import project.hakyeonjiyeon.domain.TeacherFile;
 import project.hakyeonjiyeon.dto.*;
 import project.hakyeonjiyeon.repository.CategoryRepository;
 import project.hakyeonjiyeon.service.*;
@@ -18,6 +20,7 @@ import project.hakyeonjiyeon.service.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -49,10 +52,23 @@ public class AdminController {
      * 강사등록
      */
     @PostMapping("addTeacher")
-    public String addTeacher(@Valid @ModelAttribute TeacherCreateDto teacherCreateDto, BindingResult bindingResult) throws IOException {
+    public String addTeacher(@Valid @ModelAttribute TeacherCreateDto teacherCreateDto, BindingResult bindingResult, Model model) throws IOException {
+
+        //log.info("multipartFile={}", teacherCreateDto.getTeacherFiles().get(0).getOriginalFilename());
         //validation!!
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
+            return "teacher/addTeacherForm";
+        }
+        List<String> originalFile = new ArrayList<>();
+        List<MultipartFile> teacherFiles= teacherCreateDto.getTeacherFiles();
+        for (MultipartFile teacherFile : teacherFiles) {
+            if(!teacherFile.getOriginalFilename().isBlank()){
+                originalFile.add(teacherFile.getOriginalFilename());
+            }
+        }
+        if (originalFile.isEmpty()) {
+            model.addAttribute("errorMessage", "파일을 한개 이상 등록해주세요.");
             return "teacher/addTeacherForm";
         }
 
@@ -74,8 +90,10 @@ public class AdminController {
      * 강사 디테일
      */
     @GetMapping("/teacher/{teacherId}")
-    public String teacherDetail(Model model) {
+    public String teacherDetail(@PathVariable("teacherId") Long teacherId, Model model) {
 
+        TeacherCreateDto teacherCreateDto = teacherService.getTeacher(teacherId);
+        model.addAttribute("teacherCreateDto", teacherCreateDto);
         return "teacher/detail";
     }
 
@@ -84,8 +102,25 @@ public class AdminController {
      */
     @PostMapping("/teacher/{teacherId}")
     public String teacherUpdate() {
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return "redirect:/";
+    }
+
+    /*
+    * 강사 삭제
+    */
+    @GetMapping("/teacher/remove/{teacherId}")
+    public String removeTeacher(@PathVariable("teacherId") Long teacherId, Model model) {
+        try {
+            teacherService.remove(teacherId);
+        }catch (SQLException e) {
+            model.addAttribute("errorMessage", "하위레슨이 있어 삭제할 수 없습니다.");
+            List<TeacherFormDto> teacherList = teacherService.getTeacherList();
+            model.addAttribute("teacherList", teacherList);
+            return "teacher/teacherList";
+        }
+
+        return "redirect:/teacher";
     }
 
 
@@ -191,7 +226,7 @@ public class AdminController {
      * 레슨등록
      */
     @PostMapping("addLesson")
-    public String addLesson(@Valid @ModelAttribute LessonCreateDto lessonCreateDto, BindingResult bindingResult) throws IOException {
+    public String addLesson(@Valid @ModelAttribute LessonCreateDto lessonCreateDto, BindingResult bindingResult, Model model) throws IOException {
         //validation!!
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
@@ -203,6 +238,26 @@ public class AdminController {
             List<CategoryFormDto> categoryList = categoryService.getCategoryList();
             lessonCreateDto.setCategoryList(categoryList);
 
+            return "lesson/addLessonForm";
+        }
+
+        List<String> originalFile = new ArrayList<>();
+        List<MultipartFile> lessonFiles= lessonCreateDto.getLessonFiles();
+        for (MultipartFile lessonFile : lessonFiles) {
+            if(!lessonFile.getOriginalFilename().isBlank()){
+                originalFile.add(lessonFile.getOriginalFilename());
+            }
+        }
+        if (originalFile.isEmpty()) {
+            model.addAttribute("errorMessage", "파일을 한개 이상 등록해주세요.");
+
+            //강사조회
+            List<TeacherFormDto> teacherList = teacherService.getTeacherList();
+            lessonCreateDto.setTeacherList(teacherList);
+
+            //카테고리 조회
+            List<CategoryFormDto> categoryList = categoryService.getCategoryList();
+            lessonCreateDto.setCategoryList(categoryList);
             return "lesson/addLessonForm";
         }
 
@@ -233,6 +288,16 @@ public class AdminController {
     public String lessonUpdate() {
 
         return "redirect:/";
+    }
+
+    /*
+     * 레슨 삭제
+     */
+    @GetMapping("/lesson/remove/{lessonId}")
+    public String removeLesson(@PathVariable("lessonId") Long lessonId, Model model) {
+
+        lessonService.remove(lessonId);
+        return "redirect:/category";
     }
 
     /*

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import project.hakyeonjiyeon.dto.TeacherCreateDto;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,11 @@ public class Teacher {
 
     @OneToMany(mappedBy ="teacher" ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TeacherFile> teacherFiles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "teacher")
+    private List<Lesson> lessons = new ArrayList<>();
+
+
 
     private void setId(Long id) {
         this.id = id;
@@ -53,14 +61,22 @@ public class Teacher {
 
     }
 
+    public void addLesson(Lesson lesson) {
+        lessons.add(lesson);
+        lesson.setTeacher(this);
+    }
+
 
     @Builder
-    public Teacher(String name, String phoneNumber, String introduction, List<TeacherFile> teacherFiles) {
+    public Teacher(String name, String phoneNumber, String introduction, List<TeacherFile> teacherFiles, List<Lesson> lessons) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.introduction = introduction;
         for (TeacherFile teacherFile : teacherFiles) {
             addTeacherFile(teacherFile);
+        }
+        for (Lesson lesson : lessons) {
+            addLesson(lesson);
         }
     }
 

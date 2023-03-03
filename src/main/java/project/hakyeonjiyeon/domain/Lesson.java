@@ -94,7 +94,7 @@ public class Lesson {
         this.content = content;
     }
 
-    private void setTeacher(Teacher teacher) {
+    public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
 

@@ -52,5 +52,9 @@ public class LessonRepository {
                 .getSingleResult();
     }
 
+    public void delete(Lesson lesson) {
+        em.remove(lesson);
+    }
+
 
 }

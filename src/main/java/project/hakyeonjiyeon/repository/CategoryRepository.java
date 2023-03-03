@@ -28,18 +28,8 @@ public class CategoryRepository {
         ).getResultList();
     }
 
-    public List<Category> findWithLesson(Long categoryId) {
-        return em.createQuery(
-                "select c from Category c"
-                +" where id= :id"
-        ).setParameter("id", categoryId)
-                .getResultList();
-    }
 
-    public void delete(Long categoryId) {
-        em.createQuery(
-                "delete from Category c where id= :id"
-        ).setParameter("id", categoryId)
-                .executeUpdate();
+    public void delete(Category category) {
+        em.remove(category);
     }
 }

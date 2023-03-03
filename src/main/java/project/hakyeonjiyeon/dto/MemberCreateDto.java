@@ -23,7 +23,7 @@ public class MemberCreateDto {
     private String nickName;
 
     @NotBlank(message = "휴대혼번호를 입력해주세요.")
-    @Pattern(regexp = "\\d{3}-\\d{4}-\\d{4}", message = "형식에 맞게 입력해주세요.")
+    @Pattern(regexp = "\\d{11}", message = "형식에 맞게 입력해주세요.")
     private String phoneNumber;
 
     @NotBlank(message = "주소를 입력해주세요.")

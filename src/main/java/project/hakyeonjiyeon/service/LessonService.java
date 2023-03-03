@@ -12,6 +12,7 @@ import project.hakyeonjiyeon.repository.LessonRepository;
 import project.hakyeonjiyeon.repository.TeacherRepository;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,6 +134,14 @@ public class LessonService {
         }
 
         return lessonDetailDto;
+    }
+
+    //레슨 삭제
+    @Transactional
+    public void remove(Long lessonId) {
+
+        Lesson lesson = lessonRepository.findById(lessonId);
+        lessonRepository.delete(lesson);
     }
 
 

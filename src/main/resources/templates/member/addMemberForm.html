@@ -33,7 +33,7 @@
                 <div class="field-error" th:errors="*{nickName}">닉네임 오류</div>
             </div>
             <div>
-                전화번호: <input type="text" th:field="*{phoneNumber}" placeholder="예) 010-1234-5678" th:errorclass="field-error" class="form-control" maxlength=20>
+                전화번호: <input type="text" th:field="*{phoneNumber}" placeholder="'-'없이 입력" th:errorclass="field-error" class="form-control" maxlength=20>
                 <div class="field-error" th:errors="*{phoneNumber}">전화번호 오류</div>
             </div>
             <div>

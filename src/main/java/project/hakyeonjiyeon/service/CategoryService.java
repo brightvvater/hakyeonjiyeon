@@ -80,17 +80,18 @@ public class CategoryService {
         category.update(categoryCreateDto);
     }
 
+    //카테고리 삭제
     @Transactional
     public void remove(Long categoryId) throws SQLException {
 
-        List<Category> categories = categoryRepository.findWithLesson(categoryId);
+        Category category = categoryRepository.findById(categoryId);
         /*for (Category category : categories) {
             log.info("category={}", category.getLessons());
         }*/
-        if(!categories.isEmpty()){
+        if(!category.getLessons().isEmpty()){
             throw new SQLException();
         }
-        categoryRepository.delete(categoryId);
+        categoryRepository.delete(category);
     }
 
 
